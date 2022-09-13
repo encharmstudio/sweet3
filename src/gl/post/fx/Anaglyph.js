@@ -3,7 +3,7 @@ import { guiSettingsBind } from "../../global/GUI";
 export class Anaglyph {
   out = {
     uniforms: {
-      anaglyphPower: guiSettingsBind("post.anaglyph", 0, 100, 5),
+      anaglyphPower: guiSettingsBind("post.anaglyph", 0, 100),
     },
     declarations: /*glsl*/`
 uniform float anaglyphPower;
@@ -13,9 +13,9 @@ uniform float anaglyphPower;
       vec2 d = fc * texelSize * anaglyphPower;
       // vec2 d = normalize(fc) * texelSize * anaglyphPower;
       color = vec3(
-        texture2D(map, uv + d).r,
+        texture2D(map, uv + d + texelSize).r,
         color.g,
-        texture2D(map, uv - d).b
+        texture2D(map, uv - d - texelSize).b
       );
     }`
   };

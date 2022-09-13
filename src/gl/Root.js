@@ -66,7 +66,7 @@ export class Root {
     new Frame();
     new Pointer();
     new CameraController();
-    new BackgroundColor(0x104080);
+    new BackgroundColor();
     new LightsAndShadows();
     new Floor();
     new MSDFText({

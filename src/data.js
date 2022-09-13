@@ -6,8 +6,8 @@ export const defaults = {
   post: {
     exposure: 1,
     vignette: .1,
-    halo: .5,
-    anaglyph: 10,
+    halo: .1,
+    anaglyph: 2,
     bloom: {
       filter: {
         threshold: 1,
