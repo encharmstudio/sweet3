@@ -31,7 +31,6 @@ export class RenderingPipeline {
     this.renderer = new WebGLRenderer({
       antialias: false,
       powerPreference: "high-performance",
-      stencil: false,
     });
     Root.container.appendChild(this.renderer.domElement);
     

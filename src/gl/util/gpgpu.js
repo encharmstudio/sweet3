@@ -1,17 +1,7 @@
-import { ClampToEdgeWrapping, FloatType, LinearEncoding, Mesh, NearestFilter, OrthographicCamera, PlaneBufferGeometry, RawShaderMaterial, RedFormat, WebGLRenderTarget } from "three";
+import { ClampToEdgeWrapping, FloatType, LinearEncoding, Mesh, NearestFilter, OrthographicCamera, PlaneGeometry, RawShaderMaterial, RedFormat, WebGLRenderTarget } from "three";
 import { Root } from "../Root";
 
-// this.plane = Geometry({
-//   position: {
-//     size: 2,
-//     data: new Float32Array([-1, -1, 3, -1, -1, 3]),
-//   },
-//   uv: {
-//     size: 2,
-//     data: new Float32Array([0, 0, 2, 0, 0, 2]),
-//   },
-// })
-const plane = new PlaneBufferGeometry(2, 2, 1, 1);
+const plane = new PlaneGeometry(2, 2, 1, 1);
 const dummyCam = new OrthographicCamera(-1, 1, 1, -1, -1, 1);
 
 export const createRT = ({
