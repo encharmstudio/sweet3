@@ -20,6 +20,8 @@ export class GL {
     Root.instance.create();
   
     document.body.addEventListener("mousemove", this.#updatePointer);
+    document.body.addEventListener("mousedown", this.#mouseDown);
+    document.body.addEventListener("mouseup", this.#mouseUp);
 
     requestAnimationFrame(this.#onFrame);
 
@@ -31,6 +33,14 @@ export class GL {
       x: e.clientX,
       y: e.clientY,
     });
+  };
+
+  #mouseDown = () => {
+    EventBus.dispatch("pointer.raw.down");
+  };
+
+  #mouseUp = () => {
+    EventBus.dispatch("pointer.raw.up");
   };
 
   #onFrame = (time) => {
