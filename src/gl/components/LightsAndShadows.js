@@ -18,7 +18,7 @@ export class LightsAndShadows {
 
     Root.scene.add(
       spotLight,
-      new AmbientLight(0xffffff, 1),
+      new AmbientLight(0x101010, 1),
     );
 
     if (Root.settings.devMode) {

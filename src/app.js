@@ -1,7 +1,7 @@
 import { GL } from "./gl";
 
 const settings = {
-  backgroundColor: 0x001020,
+  backgroundColor: 0x000000,
 };
 
 const container = document.getElementById("container");

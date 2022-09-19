@@ -8,6 +8,9 @@ import { defaults } from "../data";
 import { CameraController } from "./components/CameraController";
 import { Floor } from "./components/Floor";
 import { MSDFText } from "./components/MSDFText";
+import { MSDFText as MSDFText1 } from "./components/MSDFText1";
+import { MSDFText as MSDFText2 } from "./components/MSDFText2";
+import { MSDFText as MSDFTextFire } from "./components/MSDFTextFire";
 import { Pointer } from "./components/Pointer";
 import { Frame } from "./components/Frame";
 import { LightsAndShadows } from "./components/LightsAndShadows";
@@ -70,12 +73,36 @@ export class Root {
     new LightsAndShadows();
     new Floor();
     new MSDFText({
-      text: "HI THERE",
+      text: "HI CHEKER",
       align: "center",
       width: 500,
       ptSize: 0.01,
       position: [-2.5, 1, 0],
       lookAt: [-2.5, 1, 1],
+    });
+    new MSDFText1({
+      text: "HI NEON",
+      align: "center",
+      width: 500,
+      ptSize: 0.01,
+      position: [-2.5, 1.5, 0],
+      lookAt: [-2.5, 1.5, 1],
+    });
+    new MSDFText2({
+      text: "HI BLOT",
+      align: "center",
+      width: 500,
+      ptSize: 0.01,
+      position: [-2.5, 2.0, 0],
+      lookAt: [-2.5, 2.0, 1],
+    });
+    new MSDFTextFire({
+      text: "DOOM",
+      align: "center",
+      width: 250,
+      ptSize: 0.02,
+      position: [-2.5, 2.5, 0],
+      lookAt: [-2.5, 2.5, 1],
     });
 
     if (defaults.devMode) {

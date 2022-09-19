@@ -12,38 +12,38 @@ module.exports.pages = function pages (glyphs) {
 }
 
 module.exports.uvs = function uvs (glyphs, texWidth, texHeight, flipY) {
-  var uvs = new Float32Array(glyphs.length * 4 * 2)
-  var i = 0
+  var uvs = new Float32Array(glyphs.length * 4 * 2);
+  var i = 0;
   glyphs.forEach(function (glyph) {
-    var bitmap = glyph.data
-    var bw = (bitmap.x + bitmap.width)
-    var bh = (bitmap.y + bitmap.height)
+    var bitmap = glyph.data;
+    var bw = (bitmap.x + bitmap.width);
+    var bh = (bitmap.y + bitmap.height);
 
     // top left position
-    var u0 = bitmap.x / texWidth
-    var v1 = bitmap.y / texHeight
-    var u1 = bw / texWidth
-    var v0 = bh / texHeight
+    var u0 = bitmap.x / texWidth;
+    var v1 = bitmap.y / texHeight;
+    var u1 = bw / texWidth;
+    var v0 = bh / texHeight;
 
     if (flipY) {
-      v1 = (texHeight - bitmap.y) / texHeight
-      v0 = (texHeight - bh) / texHeight
+      v1 = (texHeight - bitmap.y) / texHeight;
+      v0 = (texHeight - bh) / texHeight;
     }
 
     // BL
-    uvs[i++] = u0
-    uvs[i++] = v1
+    uvs[i++] = u0;
+    uvs[i++] = v1;
     // TL
-    uvs[i++] = u0
-    uvs[i++] = v0
+    uvs[i++] = u0;
+    uvs[i++] = v0;
     // TR
-    uvs[i++] = u1
-    uvs[i++] = v0
+    uvs[i++] = u1;
+    uvs[i++] = v0;
     // BR
-    uvs[i++] = u1
-    uvs[i++] = v1
+    uvs[i++] = u1;
+    uvs[i++] = v1;
   })
-  return uvs
+  return uvs;
 }
 
 module.exports.layoutUvs = function layoutUvs(

@@ -49,14 +49,14 @@ export class RenderingPipeline {
     );
 
     this.fx = [
-      new FXAA(),
-      new Anaglyph(),
-      new Bloom(),
-      new Halo(),
-      new ACESToneMapping(),
-      new sRGB(),
-      new Vignette(),
-      new Dither(),
+       new FXAA(),
+      // new Anaglyph(),
+      // new Bloom(),
+      // new Halo(),
+      //new ACESToneMapping(),
+      //new sRGB(),
+      // new Vignette(),
+      // new Dither(),
     ];
 
     this.composer = new Composer(this.fx);

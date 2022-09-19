@@ -38,6 +38,43 @@ float patternCheker(vec2 vUv){
 
 }
 
+float patternLines(vec2 uv){
+
+  float p = progress;
+  vec2 st = vec2(fract(uv.x * 10.0),uv.y);
+  
+  float p1 = mapRange(p, 0.0, 0.5, 0.0, 1.0);
+  float p2 = mapRange(p, 0.5, 1.0, 0.0, 1.0);
+
+  float mask = 0.0;
+  if(st.x < 0.5) {
+    if(st.y < p1) {
+      mask = 1.0;
+    }
+  } else {
+    if(st.y > (1.0-p1) ) {
+      mask = 1.0;
+    }
+  }
+
+  if(progress >= 0.5) {
+   // mask = 1.0;
+    if(st.x < 0.5) {
+        if(st.y < p2) {
+          mask = 0.0;
+        }
+      } else {
+        if(st.y > (1.0 - p2)) {
+          mask = 0.0;
+        }
+      }
+  } 
+
+  return mask;
+
+}
+
+
 float median(float r, float g, float b) {
   return max(min(r, g), min(max(r, g), b));
 }
@@ -55,47 +92,44 @@ void main() {
   vec3 orange = vec3(1.0, 0.5, 0.0);
   vec3 pink = vec3(1.0, 0.4, 0.8);
   vec3 blue = vec3(0.0, 0.2, 0.8);
-  vec3 brown = vec3(0.6, 0.3, 0.0);
-  vec3 fontColor = blue;
+  vec3 fontColor = pink;
   
   vec3  mainColor = vec3(orange);
 
 
   float pattern = patternCheker(vUv);
   float w = 0.5;
-  float p0 = progress;
-  p0 = mapRange(p0,0.0,0.25, -w ,1.0);  
-  p0 = smoothstep(p0, p0 + w,vLayoutUv.x);
-  float mix0 = clamp(2.0 * (1.0 - p0) - pattern, 0.0, 1.0);
+  // float p0 = progress;
+  // p0 = mapRange(p0,0.0,0.25, -w ,1.0);  
+  // p0 = smoothstep(p0, p0 + w,vLayoutUv.x);
+  // float mix0 = clamp(2.0 * (1.0 - p0) - pattern, 0.0, 1.0);
 
-  float p1 = progress;
-  p1 = mapRange(p1, 0.0, 0.5, -w, 1.0);
-  p1 = smoothstep(p1, p1 + w, vLayoutUv.x);
-  float mix1 = clamp(2.0 * (1.0 - p1)- pattern , 0.0, 1.0);
+  // float p1 = progress;
+  // p1 = mapRange(p1, 0.0, 0.5, -w, 1.0);
+  // p1 = smoothstep(p1, p1 + w, vLayoutUv.x);
+  // float mix1 = clamp(2.0 * (1.0 - p1)- pattern , 0.0, 1.0);
 
   float p2 = progress;
-  p2 = mapRange(p2, 0.5, 0.75, -w, 1.0 );
+  p2 = mapRange(p2, 0.25, 1.0, -w, 1.0 );
   p2 = smoothstep(p2, p2 + w, vLayoutUv.x);
   float mix2 = clamp(2.0 * (p2) - pattern, 0.0, 1.0);
 
-  float p3 = progress;
-  p3 = mapRange(p3, 0.75, 1.0, -w, 1.0 );
-  p3 = smoothstep(p3, p3 + w, vLayoutUv.x);
-  float mix3 = clamp(2.0 * (p3) - pattern, 0.0, 1.0);
+  // float p3 = progress;
+  // p3 = mapRange(p3, 0.75, 1.0, -w, 1.0 );
+  // p3 = smoothstep(p3, p3 + w, vLayoutUv.x);
+  // float mix3 = clamp(2.0 * (p3) - pattern, 0.0, 1.0);
 
-  float fade = 1.0;
-  if(progress <= 0.5){
-   mainColor = mix(fontColor, white, mix1);//0-1
-   fade = mix0; //0-1
-  }else{
+  //float fade = 1.0;
+  // if(progress <= 0.5){
+  //  mainColor = mix(fontColor, white, mix1);//0-1
+  //  fade = mix0; //0-1
+  // }else{
    mainColor = mix(white, fontColor, 1.0 - mix2); //1-0 
-   fade =  mix3; //1-0
-  }
-  // float mainmix = abs(mix1 - (1.0 - mix2));
-  // mainColor = mix(blue, white, mainmix);//0-1 
-  // fade = abs(mix0 - (1.0-mix3)); //0-1
-  vec4 finalColor = vec4(mainColor,min(alpha,fade));
-  //gl_FragColor = vec4(mainColor, alpha);
+   //fade =  mix3; //1-0
+  //}
+  
+float maskPatternLines = patternLines(vLayoutUv);
+vec4 finalColor = vec4(fontColor*maskPatternLines*mix2,min(alpha,maskPatternLines));
  
 //Stroke
 #ifdef STROKE
@@ -123,7 +157,7 @@ pStrokeOUT = mapRange(pStrokeOUT, 0.8, 1.0, 0.0, 1.0);
 pStrokeOUT = smoothstep(pStrokeOUT, pStrokeOUT + w, vLayoutUv.x);
 float mixStrokeOUT =  clamp(2.0 * (pStrokeOUT), 0.0, 1.0); 
 float mixStroke = abs(mixStrokeIN - (1.0 - mixStrokeOUT));
-vec3 strokeColor = mix(white,red,mixStroke); 
+vec3 strokeColor = mix(white,blue,mixStroke); 
 
 // Border
   float border = outset * inset;

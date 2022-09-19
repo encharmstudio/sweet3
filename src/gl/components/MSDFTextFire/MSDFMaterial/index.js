@@ -1,5 +1,6 @@
 import { Color, DoubleSide, ShaderMaterial } from "three";
 import { guiSettingsBind } from "../../../global/GUI";
+import { bind } from "../../../global/Uniforms";
 
 import vertexShader from "./msdf.vert";
 import fragmentShader from "./msdf.frag";
@@ -21,6 +22,7 @@ export class MSDFMaterial extends ShaderMaterial {
         uStrokeOutsetWidth: { value: 0.5 },
         uStrokeInsetWidth: { value: 0.5 },
         uThreshold: { value: 0.05 },
+        time:  bind("time"),
       },
       side: DoubleSide,
       transparent: true,
