@@ -91,11 +91,7 @@ void main() {
    mainColor = mix(white, fontColor, 1.0 - mix2); //1-0 
    fade =  mix3; //1-0
   }
-  // float mainmix = abs(mix1 - (1.0 - mix2));
-  // mainColor = mix(blue, white, mainmix);//0-1 
-  // fade = abs(mix0 - (1.0-mix3)); //0-1
   vec4 finalColor = vec4(mainColor,min(alpha,fade));
-  //gl_FragColor = vec4(mainColor, alpha);
  
 //Stroke
 #ifdef STROKE

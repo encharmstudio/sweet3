@@ -92,8 +92,7 @@ float patternLines(vec2 uv){
   }
 
   if(progress >= 0.5) {
-   // mask = 1.0;
-    if(st.x < 0.5) {
+     if(st.x < 0.5) {
         if(st.y < p2) {
           mask = 0.0;
         }
@@ -105,7 +104,6 @@ float patternLines(vec2 uv){
   } 
 
   return mask;
-
 }
 
 float patternBlot(vec2 uv){
@@ -121,7 +119,6 @@ float patternBlot(vec2 uv){
  
   return mask;
 } 
-
 
 float median(float r, float g, float b) {
   return max(min(r, g), min(max(r, g), b));

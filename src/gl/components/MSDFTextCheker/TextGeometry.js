@@ -4,6 +4,7 @@ import createIndices from "quad-indices";
 import vertices from "./lib/vertices";
 import utils from "./lib/utils";
 
+//test
 export const createTextGeometry = opt => {
   return new TextGeometry(opt);
 };

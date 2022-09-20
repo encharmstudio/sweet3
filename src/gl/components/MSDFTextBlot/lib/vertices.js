@@ -46,8 +46,7 @@ export function uvs(glyphs, texWidth, texHeight, flipY) {
   return uvs;
 }
 
-<<<<<<< HEAD
-module.exports.layoutUvs = function layoutUvs(
+export function layoutUvs(
   glyphs,
   texWidth,
   texHeight,
@@ -79,14 +78,10 @@ module.exports.layoutUvs = function layoutUvs(
   return layoutUvs;
 };
 
-module.exports.positions = function positions (glyphs) {
-  var positions = new Float32Array(glyphs.length * 4 * 2)
-  var i = 0
-=======
 export function positions(glyphs) {
   var positions = new Float32Array(glyphs.length * 4 * 2);
   var i = 0;
->>>>>>> aa7278560a60eac366145d61e0aab94e212882dc
+
   glyphs.forEach(function (glyph) {
     var bitmap = glyph.data;
 
@@ -118,4 +113,5 @@ export default {
   positions,
   uvs,
   pages,
+  layoutUvs,
 };

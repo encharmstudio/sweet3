@@ -7,10 +7,11 @@ import { defaults } from "../data";
 
 import { CameraController } from "./components/CameraController";
 import { Floor } from "./components/Floor";
-import { MSDFText } from "./components/MSDFText";
-import { MSDFText as MSDFText1 } from "./components/MSDFText1";
-import { MSDFText as MSDFText2 } from "./components/MSDFText2";
+import { MSDFText as MSDFTextCheker } from "./components/MSDFTextCheker";
+import { MSDFText as MSDFTextNeon } from "./components/MSDFTextNeon";
+import { MSDFText as MSDFTextBlot } from "./components/MSDFTextBlot";
 import { MSDFText as MSDFTextFire } from "./components/MSDFTextFire";
+import { MSDFText as MSDFTextTest } from "./components/MSDFTextTest";
 import { Pointer } from "./components/Pointer";
 import { Frame } from "./components/Frame";
 import { LightsAndShadows } from "./components/LightsAndShadows";
@@ -72,7 +73,7 @@ export class Root {
     new BackgroundColor();
     new LightsAndShadows();
     new Floor();
-    new MSDFText({
+    new MSDFTextCheker({
       text: "HI CHEKER",
       align: "center",
       width: 500,
@@ -80,7 +81,7 @@ export class Root {
       position: [-2.5, 1, 0],
       lookAt: [-2.5, 1, 1],
     });
-    new MSDFText1({
+    new MSDFTextNeon({
       text: "HI NEON",
       align: "center",
       width: 500,
@@ -88,7 +89,7 @@ export class Root {
       position: [-2.5, 1.5, 0],
       lookAt: [-2.5, 1.5, 1],
     });
-    new MSDFText2({
+    new MSDFTextBlot({
       text: "HI BLOT",
       align: "center",
       width: 500,
@@ -100,10 +101,18 @@ export class Root {
       text: "DOOM",
       align: "center",
       width: 250,
-      ptSize: 0.02,
+      ptSize: 0.01,
       position: [-2.5, 2.5, 0],
       lookAt: [-2.5, 2.5, 1],
     });
+     new MSDFTextTest({
+       text: "DOOM",
+       align: "center",
+       width: 250,
+       ptSize: 0.02,
+       position: [-2.5, 3.0, 0],
+       lookAt: [-2.5, 3.0, 1],
+     });
 
     if (defaults.devMode) {
       this.stats = new Stats();
