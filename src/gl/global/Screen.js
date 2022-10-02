@@ -29,7 +29,7 @@ export class Screen {
   };
 
   resetDPR = () => {
-    this.dpr = Math.max(2, window.devicePixelRatio);
+    this.dpr = Math.min(2, window.devicePixelRatio);
     this.update();
   };
 
