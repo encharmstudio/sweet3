@@ -22,10 +22,6 @@ export class Pointer {
   }
   
   updatePointer = ({ x, y }) => {
-    const ndcX = x / Root.screen.x * 2 - 1,
-          ndcY = 1 - y / Root.screen.y * 2,
-          ndc = { x: ndcX, y: ndcY };
-
     this.pointer.set(x / Root.screen.x, 1 - y / Root.screen.y);
     this.pointerNDC.copy(this.pointer).multiplyScalar(2).subScalar(1);
 
@@ -35,7 +31,7 @@ export class Pointer {
     this.pointer3.x = this.pointer.x;
     this.pointer3.y = this.pointer.y;
     
-    this.raycaster.setFromCamera(ndc, Root.camera);
+    this.raycaster.setFromCamera(this.pointerNDC, Root.camera);
   };
 
   onDown = () => {
