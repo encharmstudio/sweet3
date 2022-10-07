@@ -45,7 +45,7 @@ export class GL {
 
   #onFrame = (time) => {
     EventBus.dispatch("frame.raw", time);
-    
+    //console.log(time);    
     requestAnimationFrame(this.#onFrame);
   };
   
