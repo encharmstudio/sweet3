@@ -13,6 +13,8 @@ import { Frame } from "./components/Frame";
 import { LightsAndShadows } from "./components/LightsAndShadows";
 import { BackgroundColor } from "./components/BackgroundColor";
 
+import { LineFat } from "./components/LineFat";
+
 import Stats from "./util/stats.module";
 
 export class Root {
@@ -77,6 +79,7 @@ export class Root {
       position: [-2.5, 1, 0],
       lookAt: [-2.5, 1, 1],
     });
+    new LineFat();
 
     if (defaults.devMode) {
       this.stats = new Stats();
