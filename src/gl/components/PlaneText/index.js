@@ -37,7 +37,6 @@ export class PlaneText {
     this.rtCamera.position.x = 1.5;
     this.rtCamera.position.y = -1.5;
     this.rtCamera.position.z = 2.5;
-   // this.rtCamera.lookAt(0.0,-0.0,0.0);
     this.rtScene = new Scene();
     this.rtScene.background = new Color("#000000");
     this.MSDFText.textGroup.scale.set(1.0, 1.0, 1.0);
