@@ -14,6 +14,7 @@ import { LightsAndShadows } from "./components/LightsAndShadows";
 import { BackgroundColor } from "./components/BackgroundColor";
 
 import { LineFat } from "./components/LineFat";
+import { PlaneText } from "./components/PlaneText";
 
 import Stats from "./util/stats.module";
 
@@ -71,15 +72,16 @@ export class Root {
     new BackgroundColor();
     new LightsAndShadows();
     new Floor();
-    new MSDFText({
-      text: "HI THERE",
-      align: "center",
-      width: 500,
-      ptSize: 0.01,
-      position: [-2.5, 1, 0],
-      lookAt: [-2.5, 1, 1],
-    });
-    new LineFat();
+    // new MSDFText({
+    //   text: "HI THERE",
+    //   align: "center",
+    //   width: 500,
+    //   ptSize: 0.01,
+    //   position: [-2.5, 1, 0],
+    //   lookAt: [-2.5, 1, 1],
+    // });
+    //new LineFat();
+    new PlaneText();
 
     if (defaults.devMode) {
       this.stats = new Stats();
