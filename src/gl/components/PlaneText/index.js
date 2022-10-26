@@ -6,6 +6,7 @@ import {
   Color,
   Mesh,
   PlaneGeometry,
+  Group
 } from "three";
 
 import { Root } from "../../Root";
@@ -24,6 +25,9 @@ export class PlaneText {
       lookAt: [-2.5, -0.6, 1],
     });
 
+    //GroupText
+    this.groupText = new Group();
+
     // Render Target setup
     this.rt = new WebGLRenderTarget(2048, 2048);
     this.rtCamera = new OrthographicCamera(
@@ -34,21 +38,22 @@ export class PlaneText {
       1,
       1000
     );
-    this.rtCamera.position.x = 1.5;
-    this.rtCamera.position.y = -1.5;
+    this.rtCamera.position.x = 3.0;
+    this.rtCamera.position.y = -1.0;
     this.rtCamera.position.z = 2.5;
+    // this.rtCamera.lookAt(0.0,-0.0,0.0);
     this.rtScene = new Scene();
     this.rtScene.background = new Color("#000000");
-    this.MSDFText.textGroup.scale.set(1.0, 1.0, 1.0);
-    this.rtScene.add(this.MSDFText.textGroup);
+    this.MSDFText.groupText.scale.set(1.0, 1.0, 1.0);
+    this.rtScene.add(this.MSDFText.groupText);
 
     // main Mesh setup
-    this.geometry = new PlaneGeometry(1, 1);
+    this.geometry = new PlaneGeometry(7, 7);
     this.material = new Material({
       map: this.rt.texture,
     });
     this.mesh = new Mesh(this.geometry, this.material);
-    this.mesh.position.set(0.0, 2.0, 0.0);
+    this.mesh.position.set(0.0, 7.0, -2.5);
     this.mesh.scale.set(1.0, 1.0, 1.0);
 
     Root.scene.add(this.mesh);

@@ -18,7 +18,7 @@ export class MSDFMaterial extends ShaderMaterial {
         color: { value: new Color(color) },
         power: { value: power },
         opacity: { value: opacity },
-       progress: { value: 0.0 },//guiSettingsBind("progress", 0, 1),
+        progress: { value: 0.0 },//guiSettingsBind("progress", 0, 1),
         uStrokeOutsetWidth: { value: 0.5 },
         uStrokeInsetWidth: { value: 0.5 },
         uThreshold: { value: 0.05 },
