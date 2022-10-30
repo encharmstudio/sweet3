@@ -61,8 +61,16 @@ export class Root {
     Root.pipeline.setContainer(container);
 
     Root.context = new Context();
+    const textContext = new Context({
+      camera: Root.context.camera,
+      renderSettings: {
+        bypassFX: true,
+      },
+    });
     
-    new Frame();
+    new Frame({
+      contexts: [Root.context, textContext]
+    });
     new Pointer();
     new CameraController();
     new BackgroundColor();
@@ -75,6 +83,7 @@ export class Root {
       ptSize: 0.01,
       position: [-2.5, 1, 0],
       lookAt: [-2.5, 1, 1],
+      context: textContext,
     });
 
     Root.pipeline.compile(Root.context);

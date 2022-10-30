@@ -88,6 +88,9 @@ export class Pipeline {
 
   render = (context) => {
     const { scene, camera } = context;
+
+    const autoClear = this.renderer.autoClear;
+    this.renderer.autoClear = true;
     
     this.renderer.setRenderTarget(this.sceneRT);
     this.renderer.render(scene, camera);
@@ -104,6 +107,26 @@ export class Pipeline {
       this.renderer.render(this.quad, camera);
     }
 
+    this.renderer.autoClear = autoClear;
+  };
+
+  renderContexts = (contexts) => {
+
+    const autoClear = this.renderer.autoClear;
+    this.renderer.autoClear = false;
+
+    this.renderer.clear(true, true, true);
+
+    contexts.forEach(context => {
+      if (context.renderSettings.bypassFX) {
+        this.renderer.render(context.scene, context.camera);
+      } else {
+        this.render(context);
+      }
+      this.renderer.clearDepth();
+    });
+    
+    this.renderer.autoClear = autoClear;
   };
 
   updateRendererSize = ({ x, y }) => {

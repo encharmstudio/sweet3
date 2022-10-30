@@ -6,7 +6,10 @@ import Stats from "../../util/stats.module";
 
 export class Frame {
 
-  constructor() {
+  constructor({
+    contexts = [Root.context],
+  }) {
+    this.contexts = contexts;
 
     if (Root.settings.devMode) {
       this.stats = new Stats();
@@ -36,7 +39,7 @@ export class Frame {
     EventBus.dispatch("frame", times);
 
     EventBus.dispatch("beforeRender", times);
-    Root.pipeline.render(Root.context);
+    Root.pipeline.renderContexts(this.contexts);
     EventBus.dispatch("afterRender", times);
   };
 }
