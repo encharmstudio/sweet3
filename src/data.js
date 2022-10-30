@@ -1,7 +1,13 @@
 export const defaults = {
   devMode: true,
 
-  backgroundColor: 0x001020,
+  camera: {
+    fov: 45,
+    near: .1,
+    far: 2e3,
+  },
+
+  backgroundColor: 0x010101,
 
   post: {
     exposure: 1,

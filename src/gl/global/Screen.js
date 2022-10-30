@@ -1,5 +1,4 @@
 import { Vector2, Vector4 } from "three";
-import { Root } from "../Root";
 import { EventBus } from "./EventDispatcher";
 
 export class Screen {
@@ -14,7 +13,6 @@ export class Screen {
   #debounce = null;
 
   constructor() {
-    this.container = Root.container;
     this.resetDPR();
 
     EventBus.on("dpr.set", this.setDPR);
@@ -30,6 +28,11 @@ export class Screen {
 
   resetDPR = () => {
     this.dpr = Math.min(2, window.devicePixelRatio);
+    this.update();
+  };
+
+  setContainer = container => {
+    this.container = container;
     this.update();
   };
 

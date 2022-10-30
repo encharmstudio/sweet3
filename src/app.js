@@ -1,7 +1,7 @@
 import { GL } from "./gl";
 
 const settings = {
-  backgroundColor: 0x001020,
+  backgroundColor: 0x030303,
 };
 
 const container = document.getElementById("container");
@@ -11,11 +11,10 @@ const gl = new GL({
   container,
 });
 
-
-// showPreloader()
+// showLoader()
 
 gl.load().then(() => {
 
-  // hidePreloader()
+  // hideLoader()
 
 });

@@ -1,10 +1,14 @@
 import { Raycaster, Vector2, Vector3 } from "three";
-import { EventBus } from "../global/EventDispatcher";
-import { provide } from "../global/Uniforms";
-import { Root } from "../Root";
+import { EventBus } from "../../global/EventDispatcher";
+import { provide } from "../../global/Uniforms";
+import { Root } from "../../Root";
+import { ContextComponent } from "./ContextComponent";
 
-export class Pointer {
-  constructor() {
+export class Pointer extends ContextComponent {
+  constructor({
+    context
+  } = {}) {
+    super({ context });
 
     this.pointer = new Vector2();
     this.pointerNDC = new Vector2();
@@ -31,7 +35,7 @@ export class Pointer {
     this.pointer3.x = this.pointer.x;
     this.pointer3.y = this.pointer.y;
     
-    this.raycaster.setFromCamera(this.pointerNDC, Root.camera);
+    this.raycaster.setFromCamera(this.pointerNDC, this.camera);
   };
 
   onDown = () => {

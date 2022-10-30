@@ -3,7 +3,8 @@ import { Root } from "./Root";
 
 export class GL {
   constructor({ settings, container }) {
-    new Root({ settings, container });
+    this.container = container;
+    new Root({ settings });
   }
 
   load = () => {
@@ -17,7 +18,7 @@ export class GL {
   };
 
   #create = () => {
-    Root.instance.create();
+    Root.instance.create(this.container);
   
     document.body.addEventListener("mousemove", this.#updatePointer);
     document.body.addEventListener("mousedown", this.#mouseDown);

@@ -1,10 +1,11 @@
-import { TextGeometry } from "./TextGeometry";
 import { Root } from "../../Root";
+import { ContextComponent } from "../Foundation/ContextComponent";
 import { createMesh } from "../../util/objectSugar";
-import { MSDFMaterial } from "./MSDFMaterial";
-import { defaults } from "../../../data";
 
-export class MSDFText {
+import { TextGeometry } from "./TextGeometry";
+import { MSDFMaterial } from "./MSDFMaterial";
+
+export class MSDFText extends ContextComponent {
   constructor({
     text = "Sample text",
     fontName = "openSansSauce",
@@ -15,7 +16,9 @@ export class MSDFText {
     lookAt,
     width = 1000,
     ptSize = .01,
+    context,
   } = {}) {
+    super({ context });
     
     this.mesh = createMesh({
       geometry: new TextGeometry({
@@ -34,10 +37,10 @@ export class MSDFText {
       scale,
     });
 
-    if (defaults.devMode) {
+    if (Root.settings.devMode) {
       console.log(text + " MSDF bounding box: ", this.mesh.geometry.computeBoundingBox());
     }
 
-    Root.scene.add(this.mesh);
+    this.scene.add(this.mesh);
   }
 }

@@ -23,7 +23,6 @@ export class EventDispatcher {
       this.#listeners[type].forEach(callback => callback(data));
     }
   };
-  
 }
 
 export const EventBus = new EventDispatcher();

@@ -4,6 +4,7 @@ import { EventBus } from "../global/EventDispatcher";
 import { bind, provide } from "../global/Uniforms";
 import { Composer } from "./Composer";
 
+import { FXAA } from "./fx/FXAA";
 import { Bloom } from "./fx/Bloom";
 import { Halo } from "./fx/Halo";
 import { Vignette } from "./fx/Vignette";
@@ -14,9 +15,8 @@ import { Anaglyph } from "./fx/Anaglyph";
 
 import vertexShader from "../shaderLib/uv.vert";
 import fragmentShader from "../shaderLib/copy.frag";
-import { FXAA } from "./fx/FXAA";
 
-export class RenderingPipeline {
+export class Pipeline {
 
   static rtParameters = {
     magFilter: LinearFilter,
@@ -32,7 +32,6 @@ export class RenderingPipeline {
       antialias: false,
       powerPreference: "high-performance",
     });
-    Root.container.appendChild(this.renderer.domElement);
     
     this.quad = new Mesh(
       new PlaneGeometry(1, 1, 1, 1),
@@ -45,7 +44,7 @@ export class RenderingPipeline {
     this.sceneRT = new WebGLRenderTarget(
       Root.screen.x * this.superSampling,
       Root.screen.y * this.superSampling,
-      RenderingPipeline.rtParameters
+      Pipeline.rtParameters
     );
 
     this.fx = [
@@ -81,8 +80,14 @@ export class RenderingPipeline {
     EventBus.on("resize", this.onResize);
   }
 
-  render = () => {
-    const { scene, camera } = Root;
+  setContainer = container => {
+    container.appendChild(this.renderer.domElement);
+    
+    this.onResize(Root.screen);
+  };
+
+  render = (context) => {
+    const { scene, camera } = context;
     
     this.renderer.setRenderTarget(this.sceneRT);
     this.renderer.render(scene, camera);
@@ -111,5 +116,10 @@ export class RenderingPipeline {
   onResize = ({ x, y }) => {
     this.updateRendererSize({ x, y });
     this.sceneRT.setSize(x * this.superSampling, y * this.superSampling);
+  };
+
+  compile = (context) => {
+    const { scene, camera } = context;
+    this.renderer.compile(scene, camera);
   };
 }

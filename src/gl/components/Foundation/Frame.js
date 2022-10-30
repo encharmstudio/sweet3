@@ -1,10 +1,21 @@
-import { EventBus } from "../global/EventDispatcher";
-import { provide } from "../global/Uniforms";
-import { Root } from "../Root";
+import { EventBus } from "../../global/EventDispatcher";
+import { provide } from "../../global/Uniforms";
+import { Root } from "../../Root";
+
+import Stats from "../../util/stats.module";
 
 export class Frame {
 
   constructor() {
+
+    if (Root.settings.devMode) {
+      this.stats = new Stats();
+      document.body.appendChild(this.stats.dom);
+      EventBus.on("afterRender", () => {
+        this.stats.update();
+      });
+    }
+
     EventBus.on("frame.raw", this.onFrame);
   }
 
@@ -25,7 +36,7 @@ export class Frame {
     EventBus.dispatch("frame", times);
 
     EventBus.dispatch("beforeRender", times);
-    Root.renderPipe.render();
+    Root.pipeline.render(Root.context);
     EventBus.dispatch("afterRender", times);
   };
 }

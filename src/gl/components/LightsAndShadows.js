@@ -1,9 +1,14 @@
-import { AmbientLight, SpotLight, SpotLightHelper } from "three";
 import { Root } from "../Root";
+import { ContextComponent } from "./Foundation/ContextComponent";
 import { objectWrap } from "../util/objectSugar";
+import { AmbientLight, SpotLight, SpotLightHelper } from "three";
 
-export class LightsAndShadows {
-  constructor() {
+export class LightsAndShadows extends ContextComponent {
+  constructor({
+    context,
+  } = {}) {
+    super({ context });
+
     const spotLight = objectWrap({
       object: new SpotLight(0xffffff, 1, 0, Math.PI / 6, .5),
       position: [0, 10, 5],
@@ -16,14 +21,14 @@ export class LightsAndShadows {
     spotLight.shadow.camera.far = 20;
     spotLight.shadow.focus = 1;
 
-    Root.scene.add(
+    this.scene.add(
       spotLight,
       new AmbientLight(0xffffff, 1),
     );
 
     if (Root.settings.devMode) {
       const spotLightHelper = new SpotLightHelper(spotLight);
-      Root.scene.add(spotLightHelper);
+      this.scene.add(spotLightHelper);
     }
   }
 }

@@ -1,42 +1,38 @@
-import { PerspectiveCamera, Scene } from "three";
-import { Screen } from "./global/Screen";
-import { RenderingPipeline } from "./post/RenderingPipeline";
-import { EventBus } from "./global/EventDispatcher";
-import { AssetsManager } from "./global/AssetsManager";
 import { defaults } from "../data";
+import { Context } from "./Context";
+import { AssetsManager } from "./global/AssetsManager";
+import { Screen } from "./global/Screen";
+import { Pipeline } from "./post/Pipeline";
+
+import { Pointer } from "./components/Foundation/Pointer";
+import { Frame } from "./components/Foundation/Frame";
 
 import { CameraController } from "./components/CameraController";
 import { Floor } from "./components/Floor";
 import { MSDFText } from "./components/MSDFText";
-import { Pointer } from "./components/Pointer";
-import { Frame } from "./components/Frame";
 import { LightsAndShadows } from "./components/LightsAndShadows";
 import { BackgroundColor } from "./components/BackgroundColor";
 
-import Stats from "./util/stats.module";
-
 export class Root {
 
-  /** @type {HTMLDivElement} */
+  /** @type { HTMLDivElement } */
   static container;
 
-  /** @type {AssetsManager} */
+  /** @type { AssetsManager } */
   static assetsManager;
 
-  /** @type {Screen} */
+  /** @type { Screen } */
   static screen;
   
-  /** @type {RenderingPipeline} */
-  static renderPipe;
+  /** @type { Pipeline } */
+  static pipeline;
   
-  /** @type {PerspectiveCamera} */
-  static camera;
+  /** @type { Context } */
+  static context;
   
-  static scene = new Scene();
-
   static settings = defaults;
   
-  /** @type {Root} */
+  /** @type { Root } */
   static #instance = null;
 
   static get instance() {
@@ -46,23 +42,26 @@ export class Root {
     return new Root();
   }
 
-  constructor({ settings, container }) {
+  constructor({ settings }) {
     if (Root.#instance !== null) {
       throw "Root already exists";
     }
+    Root.#instance = this;
 
-    Root.container = container;
     Root.settings = Object.assign(Root.settings, settings);
     
     Root.assetsManager = new AssetsManager();
     Root.screen = new Screen();
-    Root.camera = new PerspectiveCamera(45, Root.screen.aspect, .1, 2e3);
-    Root.renderPipe = new RenderingPipeline();
-    
-    Root.#instance = this;
+    Root.pipeline = new Pipeline();
   }
 
-  create = () => {
+  create = (container) => {
+    Root.container = container;
+    Root.screen.setContainer(container);
+    Root.pipeline.setContainer(container);
+
+    Root.context = new Context();
+    
     new Frame();
     new Pointer();
     new CameraController();
@@ -78,14 +77,6 @@ export class Root {
       lookAt: [-2.5, 1, 1],
     });
 
-    if (defaults.devMode) {
-      this.stats = new Stats();
-      document.body.appendChild(this.stats.dom);
-      EventBus.on("afterRender", () => {
-        this.stats.update();
-      });
-
-      window.cam = Root.camera;
-    }
+    Root.pipeline.compile(Root.context);
   };  
 }

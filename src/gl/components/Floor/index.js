@@ -2,10 +2,11 @@ import { DepthFormat, DepthTexture, HalfFloatType, LinearEncoding, LinearFilter,
 import { EventBus } from "../../global/EventDispatcher";
 import { Root } from "../../Root";
 import { createMesh } from "../../util/objectSugar";
+import { ContextComponent } from "../Foundation/ContextComponent";
 import { BlurPass } from "./BlurPass";
 import { Material } from "./Material";
 
-export class Floor {
+export class Floor extends ContextComponent {
 
   constructor({
     resolution = 1024,
@@ -20,7 +21,10 @@ export class Floor {
     depthToBlurRatioBias = 0.25,
     distortion = 0,
     distortionMap,
+    context,
   } = {}) {
+    super({ context });
+
     this.blur = blur;
     this.hasBlur = blur[0] + blur[1] > 0;
     this.normal = new Vector3();
@@ -34,7 +38,7 @@ export class Floor {
     this.target = new Vector3();
     this.q = new Vector4();
     this.textureMatrix = new Matrix4();
-    this.virtualCamera = Root.camera.clone();
+    this.virtualCamera = this.camera.clone();
 
     const parameters = {
       minFilter: LinearFilter,
@@ -51,7 +55,7 @@ export class Floor {
     this.fbo2 = new WebGLRenderTarget(resolution, resolution, parameters);
     
     this.blurpass = new BlurPass({
-      gl: Root.renderPipe.renderer,
+      gl: Root.pipeline.renderer,
       resolution,
       width: blur[0],
       height: blur[1],
@@ -87,14 +91,14 @@ export class Floor {
 
     this.mesh.position.y -= .01;
 
-    Root.scene.add(this.mesh);
+    this.scene.add(this.mesh);
 
     EventBus.on("beforeRender", this.onBeforeRender);
   }
 
   onBeforeRender = () => {
     this.reflectorWorldPosition.setFromMatrixPosition(this.mesh.matrixWorld);
-    this.cameraWorldPosition.setFromMatrixPosition(Root.camera.matrixWorld);
+    this.cameraWorldPosition.setFromMatrixPosition(this.camera.matrixWorld);
     this.rotationMatrix.extractRotation(this.mesh.matrixWorld);
     this.normal.set(0, 0, 1);
     this.normal.applyMatrix4(this.rotationMatrix);
@@ -106,7 +110,7 @@ export class Floor {
     this.view.reflect(this.normal).negate();
     this.view.add(this.reflectorWorldPosition);
 
-    this.rotationMatrix.extractRotation(Root.camera.matrixWorld);
+    this.rotationMatrix.extractRotation(this.camera.matrixWorld);
     this.lookAtPosition.set(0, 0, -1);
     this.lookAtPosition.applyMatrix4(this.rotationMatrix);
     this.lookAtPosition.add(this.cameraWorldPosition);
@@ -119,9 +123,9 @@ export class Floor {
     this.virtualCamera.up.applyMatrix4(this.rotationMatrix);
     this.virtualCamera.up.reflect(this.normal);
     this.virtualCamera.lookAt(this.target);
-    this.virtualCamera.far = Root.camera.far; // Used in WebGLBackground
+    this.virtualCamera.far = this.camera.far; // Used in WebGLBackground
     this.virtualCamera.updateMatrixWorld();
-    this.virtualCamera.projectionMatrix.copy(Root.camera.projectionMatrix);
+    this.virtualCamera.projectionMatrix.copy(this.camera.projectionMatrix);
 
     // Update the texture matrix
     this.textureMatrix.set(0.5, 0.0, 0.0, 0.5, 0.0, 0.5, 0.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 1.0);
@@ -150,7 +154,7 @@ export class Floor {
     projectionMatrix.elements[14] = this.clipPlane.w;
 
     this.mesh.visible = false;
-    const renderer = Root.renderPipe.renderer;
+    const renderer = Root.pipeline.renderer;
     const currentXrEnabled = renderer.xr.enabled;
     const currentShadowAutoUpdate = renderer.shadowMap.autoUpdate;
     renderer.xr.enabled = false;
@@ -160,7 +164,7 @@ export class Floor {
     renderer.state.buffers.depth.setMask(true);
     if (!renderer.autoClear) renderer.clear();
 
-    renderer.render(Root.scene, this.virtualCamera);
+    renderer.render(this.scene, this.virtualCamera);
 
     if (this.hasBlur) {
       this.blurpass.render(renderer, this.fbo1, this.fbo2);

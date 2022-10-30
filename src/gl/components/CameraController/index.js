@@ -1,27 +1,31 @@
 import { EventBus } from "../../global/EventDispatcher";
 import { Root } from "../../Root";
+import { ContextComponent } from "../Foundation/ContextComponent";
 import { OrbitControls } from "./OrbitControls";
 
-export class CameraController {
-  constructor() {
+export class CameraController extends ContextComponent {
+  constructor({
+    context,
+  } = {}) {
+    super({ context });
+
     this.onResize(Root.screen);
 
-    this.controls = new OrbitControls(Root.camera, Root.container);
+    this.controls = new OrbitControls(this.camera, Root.container);
     this.controls.enableDamping = true;
     this.controls.dampingFactor = .1;
 
-    Root.camera.position.set(0, 2, 7);
+    this.camera.position.set(0, 2, 7);
     this.controls.target.set(0, 0.75, 0);
 
-    // TODO add lookAround functionality from comet
-    // Probably as another controller type
-
     if (Root.settings.devMode) {
-      window.controls = this.controls;
 
+      window.controls = this.controls;
+      
+      window.cam = this.camera;
       window.getCam = () => {
         console.log(`
-    Root.camera.position.set(${ Root.camera.position.toArray().join(", ") })
+    this.camera.position.set(${ this.camera.position.toArray().join(", ") })
     this.controls.target.set(${ this.controls.target.toArray().join(", ") })
         `);
       };
@@ -36,7 +40,7 @@ export class CameraController {
   };
 
   onResize = ({ aspect }) => {
-    Root.camera.aspect = aspect;
-    Root.camera.updateProjectionMatrix();
+    this.camera.aspect = aspect;
+    this.camera.updateProjectionMatrix();
   };
 }

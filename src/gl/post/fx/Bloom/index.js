@@ -3,7 +3,7 @@ import { EventBus } from "../../../global/EventDispatcher";
 import { Root } from "../../../Root";
 import { guiSettingsBind } from "../../../global/GUI";
 import { bind, provide } from "../../../global/Uniforms";
-import { RenderingPipeline } from "../../RenderingPipeline";
+import { Pipeline } from "../../Pipeline";
 import uvVert from "../../../shaderLib/uv.vert";
 import blurFrag from "./blur.frag";
 import filterFrag from "./filter.frag";
@@ -28,8 +28,8 @@ export class Bloom {
       
       this.resolutions.push(resX, resY);
 
-      this.renderTargetsHorizontal.push(new WebGLRenderTarget(resX, resY, RenderingPipeline.rtParameters));
-      this.renderTargetsVertical.push(new WebGLRenderTarget(resX, resY, RenderingPipeline.rtParameters));
+      this.renderTargetsHorizontal.push(new WebGLRenderTarget(resX, resY, Pipeline.rtParameters));
+      this.renderTargetsVertical.push(new WebGLRenderTarget(resX, resY, Pipeline.rtParameters));
       
       const kernel = kernels[i];
       this.blurMaterials.push(
@@ -52,7 +52,7 @@ export class Bloom {
       resY = Math.round(resY * .5);
     }
 
-    this.filterRenderTarget = new WebGLRenderTarget(Root.screen.x, Root.screen.y, RenderingPipeline.rtParameters);
+    this.filterRenderTarget = new WebGLRenderTarget(Root.screen.x, Root.screen.y, Pipeline.rtParameters);
     this.filterMaterial = new ShaderMaterial({
       uniforms: {
         t: bind("post.screen"),

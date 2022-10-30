@@ -13,7 +13,7 @@ export class EnvLoader extends RGBELoader {
     super.load(
       url,
       res => {
-        const pmremGenerator = new PMREMGenerator(Root.renderPipe.renderer);
+        const pmremGenerator = new PMREMGenerator(Root.pipeline.renderer);
         const env = pmremGenerator.fromEquirectangular(res).texture;
         pmremGenerator.dispose();
         onLoad(env);
