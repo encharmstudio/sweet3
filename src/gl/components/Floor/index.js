@@ -2,11 +2,11 @@ import { DepthFormat, DepthTexture, HalfFloatType, LinearEncoding, LinearFilter,
 import { EventBus } from "../../global/EventDispatcher";
 import { Root } from "../../Root";
 import { createMesh } from "../../util/objectSugar";
-import { ContextComponent } from "../Foundation/ContextComponent";
+import { ContextualComponent } from "../Foundation/ContextualComponent";
 import { BlurPass } from "./BlurPass";
 import { Material } from "./Material";
 
-export class Floor extends ContextComponent {
+export class Floor extends ContextualComponent {
 
   constructor({
     resolution = 1024,

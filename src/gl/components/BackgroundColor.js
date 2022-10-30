@@ -1,8 +1,8 @@
 import { Root } from "../Root";
-import { ContextComponent } from "./Foundation/ContextComponent";
+import { ContextualComponent } from "./Foundation/ContextualComponent";
 import { BackSide, Mesh, MeshBasicMaterial, SphereGeometry } from "three";
 
-export class BackgroundColor extends ContextComponent {
+export class BackgroundColor extends ContextualComponent {
   constructor({
     context,
   } = {}) {

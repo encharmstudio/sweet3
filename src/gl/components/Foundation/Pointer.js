@@ -2,9 +2,9 @@ import { Raycaster, Vector2, Vector3 } from "three";
 import { EventBus } from "../../global/EventDispatcher";
 import { provide } from "../../global/Uniforms";
 import { Root } from "../../Root";
-import { ContextComponent } from "./ContextComponent";
+import { ContextualComponent } from "./ContextualComponent";
 
-export class Pointer extends ContextComponent {
+export class Pointer extends ContextualComponent {
   constructor({
     context
   } = {}) {

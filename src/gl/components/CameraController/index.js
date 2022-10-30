@@ -1,9 +1,9 @@
 import { EventBus } from "../../global/EventDispatcher";
 import { Root } from "../../Root";
-import { ContextComponent } from "../Foundation/ContextComponent";
+import { ContextualComponent } from "../Foundation/ContextualComponent";
 import { OrbitControls } from "./OrbitControls";
 
-export class CameraController extends ContextComponent {
+export class CameraController extends ContextualComponent {
   constructor({
     context,
   } = {}) {

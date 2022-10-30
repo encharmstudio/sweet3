@@ -53,6 +53,8 @@ export class Root {
     Root.assetsManager = new AssetsManager();
     Root.screen = new Screen();
     Root.pipeline = new Pipeline();
+
+    Root.context = new Context();
   }
 
   create = (container) => {
@@ -60,7 +62,6 @@ export class Root {
     Root.screen.setContainer(container);
     Root.pipeline.setContainer(container);
 
-    Root.context = new Context();
     const textContext = new Context({
       camera: Root.context.camera,
       renderSettings: {
@@ -69,7 +70,7 @@ export class Root {
     });
     
     new Frame({
-      contexts: [Root.context, textContext]
+      contexts: [Root.context, textContext],
     });
     new Pointer();
     new CameraController();
@@ -87,5 +88,6 @@ export class Root {
     });
 
     Root.pipeline.compile(Root.context);
+    Root.pipeline.compile(textContext);
   };  
 }

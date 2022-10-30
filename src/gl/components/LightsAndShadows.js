@@ -1,9 +1,9 @@
 import { Root } from "../Root";
-import { ContextComponent } from "./Foundation/ContextComponent";
+import { ContextualComponent } from "./Foundation/ContextualComponent";
 import { objectWrap } from "../util/objectSugar";
 import { AmbientLight, SpotLight, SpotLightHelper } from "three";
 
-export class LightsAndShadows extends ContextComponent {
+export class LightsAndShadows extends ContextualComponent {
   constructor({
     context,
   } = {}) {

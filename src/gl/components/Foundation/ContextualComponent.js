@@ -1,6 +1,6 @@
 import { Root } from "../../Root";
 
-export class ContextComponent {
+export class ContextualComponent {
 
   constructor({ context = Root.context }) {
     this.context = context;

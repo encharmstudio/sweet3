@@ -1,11 +1,11 @@
 import { Root } from "../../Root";
-import { ContextComponent } from "../Foundation/ContextComponent";
+import { ContextualComponent } from "../Foundation/ContextualComponent";
 import { createMesh } from "../../util/objectSugar";
 
 import { TextGeometry } from "./TextGeometry";
 import { MSDFMaterial } from "./MSDFMaterial";
 
-export class MSDFText extends ContextComponent {
+export class MSDFText extends ContextualComponent {
   constructor({
     text = "Sample text",
     fontName = "openSansSauce",
