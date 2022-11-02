@@ -23,4 +23,11 @@ export const assets = {
   "floor.diffuse": "textures/squfloor/diffuse.jpg",
   "floor.normal": "textures/squfloor/normal.jpg",
   "floor.roughness": "textures/squfloor/roughness.jpg",
+
+  env: {
+    type: "env",
+    path: "textures/env/MR_INT-003_Kitchen_Pierre.hdr",
+  },
+
+  cross: "models/cross.glb",
 };

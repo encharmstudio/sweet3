@@ -13,10 +13,15 @@ import { Frame } from "./components/Frame";
 import { LightsAndShadows } from "./components/LightsAndShadows";
 import { BackgroundColor } from "./components/BackgroundColor";
 
+import { Env } from "./components/Env";
+import { EndLess } from "./components/EndLess";
+import { LineFat } from "./components/LineFat";
+import { OrganicSphere } from "./components/OrganicSphere";
+import { Twist } from "./components/Twist";
+
 import Stats from "./util/stats.module";
 
 export class Root {
-
   /** @type {HTMLDivElement} */
   static container;
 
@@ -25,17 +30,17 @@ export class Root {
 
   /** @type {Screen} */
   static screen;
-  
+
   /** @type {RenderingPipeline} */
   static renderPipe;
-  
+
   /** @type {PerspectiveCamera} */
   static camera;
-  
+
   static scene = new Scene();
 
   static settings = defaults;
-  
+
   /** @type {Root} */
   static #instance = null;
 
@@ -53,12 +58,12 @@ export class Root {
 
     Root.container = container;
     Root.settings = Object.assign(Root.settings, settings);
-    
+
     Root.assetsManager = new AssetsManager();
     Root.screen = new Screen();
-    Root.camera = new PerspectiveCamera(45, Root.screen.aspect, .1, 2e3);
+    Root.camera = new PerspectiveCamera(45, Root.screen.aspect, 0.1, 2e3);
     Root.renderPipe = new RenderingPipeline();
-    
+
     Root.#instance = this;
   }
 
@@ -66,7 +71,7 @@ export class Root {
     new Frame();
     new Pointer();
     new CameraController();
-    new BackgroundColor();
+    //new BackgroundColor();
     new LightsAndShadows();
     new Floor();
     new MSDFText({
@@ -78,6 +83,16 @@ export class Root {
       lookAt: [-2.5, 1, 1],
     });
 
+    new Env();
+    new EndLess();
+    new LineFat();
+    new OrganicSphere({
+      radius: 7.0,
+      widthSegments: 128.0,
+      heightSegments: 128.0,
+    });
+    new Twist();
+
     if (defaults.devMode) {
       this.stats = new Stats();
       document.body.appendChild(this.stats.dom);
@@ -87,5 +102,5 @@ export class Root {
 
       window.cam = Root.camera;
     }
-  };  
+  };
 }

@@ -50,9 +50,9 @@ export class RenderingPipeline {
 
     this.fx = [
       new FXAA(),
-      new Anaglyph(),
-      new Bloom(),
-      new Halo(),
+     // new Anaglyph(),
+     // new Bloom(),
+     // new Halo(),
       new ACESToneMapping(),
       new sRGB(),
       new Vignette(),
