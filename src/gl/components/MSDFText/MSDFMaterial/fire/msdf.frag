@@ -210,6 +210,6 @@ finalColor = mix(finalColor,strokedFragColor, step(0.5,border));
 
 #endif
  
-gl_FragColor = finalColor;
+gl_FragColor = vec4(vLayoutUv, 0.0, 1.0);
 
 }

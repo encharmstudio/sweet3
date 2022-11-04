@@ -16,7 +16,6 @@ uniform vec3 uStrokeColor;
 uniform float uStrokeOutsetWidth;
 uniform float uStrokeInsetWidth;
 uniform float uThreshold;
-uniform float time;
 
 #define STROKE
 
@@ -93,8 +92,7 @@ float patternLines(vec2 uv){
   }
 
   if(progress >= 0.5) {
-   // mask = 1.0;
-    if(st.x < 0.5) {
+     if(st.x < 0.5) {
         if(st.y < p2) {
           mask = 0.0;
         }
@@ -106,7 +104,6 @@ float patternLines(vec2 uv){
   } 
 
   return mask;
-
 }
 
 float patternBlot(vec2 uv){
@@ -123,38 +120,6 @@ float patternBlot(vec2 uv){
   return mask;
 } 
 
-vec3 patternFire(vec2 uv){
- 
-  const float speed = 0.001;
-  const float detals = 1.3;
-  const float force = 0.4;
-  const float shift = 0.0;
-  const float scalaFactor = 100.0;
-  //noise 
-
-  vec2 xyFast =  vec2(uv.x* scalaFactor, uv.y* scalaFactor - time * speed);
-  //vec2 xyFast = vec2(uv.x, uv.y);
-  float noise1 = fbm(xyFast);
-  float noise2 = force * (fbm(xyFast+noise1+ time * speed)-shift);
-
-  float nnoise1 = force * (fbm(vec2(noise1,noise2)));
-  float nnoise2 = fbm(vec2(noise2, noise1));
-  
-  //cg
-  const vec3 red = vec3(0.9,0.4,0.2);
-  const vec3 yellow = vec3(0.9, 0.9, 0.0);
-  const vec3 darkRed = vec3(0.5,0.0,0.0);
-  const vec3 dark = vec3(0.1, 0.1, 0.1);
-  vec3 c1 = mix(red,darkRed,nnoise1+shift);
-  vec3 c2 = mix(yellow,dark,nnoise2);
-  
-  vec3 gradient = vec3(1.0) - vec3(vLayoutUv.y) * 0.1 *  progress;
-  vec3 c = c1 + c2 - gradient - noise2;
-    
-  return c;
-}
-
-
 float median(float r, float g, float b) {
   return max(min(r, g), min(max(r, g), b));
 }
@@ -166,15 +131,27 @@ void main() {
   if (alpha < .01) discard;
   //gl_FragColor = vec4(color * power, alpha);
 
-  // vec3 black = vec3(0.0);
-  // vec3 white = vec3(1.0);
-  // vec3 red = vec3(1.0,0.0,0.0);
-  // vec3 orange = vec3(1.0, 0.5, 0.0);
-  // vec3 pink = vec3(1.0, 0.4, 0.8);
-  // vec3 blue = vec3(0.0, 0.2, 0.8);
-  // vec3 fontColor = orange;
+  vec3 black = vec3(0.0);
+  vec3 white = vec3(1.0);
+  vec3 red = vec3(1.0,0.0,0.0);
+  vec3 orange = vec3(1.0, 0.5, 0.0);
+  vec3 pink = vec3(1.0, 0.4, 0.8);
+  vec3 blue = vec3(0.0, 0.2, 0.8);
+  vec3 fontColor = orange;
+  
+  vec3  mainColor = vec3(orange);
 
-  vec4 finalColor = vec4(patternFire(vUv),1.0);
+
+  float pattern = patternCheker(vUv);
+  float w = 0.5;
+  float p2 = progress;
+  p2 = mapRange(p2, 0.25, 1.0, -w, 1.0 );
+  p2 = smoothstep(p2, p2 + w, vLayoutUv.x);
+  float mix2 = clamp(2.0 * (p2) - pattern, 0.0, 1.0);
+  //mainColor = mix(white, fontColor, 1.0 - mix2); //1-0 
+  
+  float maskPattern = patternBlot(vUv);
+  vec4 finalColor = vec4(fontColor*maskPattern,min(alpha,maskPattern));
  
 //Stroke
 #ifdef STROKE
@@ -192,17 +169,22 @@ void main() {
   float inset = 1.0 - clamp(sigDistInset / fwidth(sigDistInset) + 0.5, 0.0, 1.0);
 #endif
 
+float pStrokeIN = progress;
+pStrokeIN = mapRange(pStrokeIN, 0.0, 0.2, -w, 1.0);
+pStrokeIN = smoothstep(pStrokeIN, pStrokeIN + w, vLayoutUv.x);
+float mixStrokeIN = 1.0-clamp(2.0 * (pStrokeIN), 0.0, 1.0); 
 
-float pStroke = progress;
-pStroke = mapRange(pStroke, 0.1, 1.0, 0.0, 1.0);
-pStroke = smoothstep(pStroke, pStroke + 0.5, vLayoutUv.x);
-float mixStroke =  clamp(2.0 * (pStroke), 0.0, 1.0); 
-vec3 strokeColor = mix(vec3(1.0, 1.0, 1.0),vec3(0.8,0.8,0.8),mixStroke); 
+float pStrokeOUT = progress;
+pStrokeOUT = mapRange(pStrokeOUT, 0.8, 1.0, 0.0, 1.0);
+pStrokeOUT = smoothstep(pStrokeOUT, pStrokeOUT + w, vLayoutUv.x);
+float mixStrokeOUT =  clamp(2.0 * (pStrokeOUT), 0.0, 1.0); 
+float mixStroke = abs(mixStrokeIN - (1.0 - mixStrokeOUT));
+vec3 strokeColor = mix(white,blue,mixStroke); 
 
 // Border
   float border = outset * inset;
 // Output
-vec4 strokedFragColor = vec4(strokeColor, opacity * border);
+vec4 strokedFragColor = vec4(strokeColor, opacity * border * mixStroke);
 
 gl_FragColor = strokedFragColor;
 

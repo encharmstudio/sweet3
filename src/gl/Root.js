@@ -18,6 +18,12 @@ import { EndLess } from "./components/EndLess";
 import { LineFat } from "./components/LineFat";
 import { OrganicSphere } from "./components/OrganicSphere";
 import { Twist } from "./components/Twist";
+import { PlaneText } from "./components/PlaneText";
+
+import { MSDFText as MSDFTextCheker } from "./components/MSDFTextCheker";
+import { MSDFText as MSDFTextBlot } from "./components/MSDFTextBlot";
+import { MSDFText as MSDFTextNeon } from "./components/MSDFTextNeon";
+import { MSDFText as MSDFTextFire } from "./components/MSDFTextFire";
 
 import Stats from "./util/stats.module";
 
@@ -92,6 +98,43 @@ export class Root {
       heightSegments: 128.0,
     });
     new Twist();
+    new MSDFTextCheker({
+      text: "CHEKER",
+      align: "center",
+      width: 500,
+      ptSize: 0.01,
+      position: [-2.5, 2, 0],
+      lookAt: [-2.5, 2, 1],
+    });
+
+    new MSDFTextBlot({
+      text: "BLOT",
+      align: "center",
+      width: 500,
+      ptSize: 0.01,
+      position: [-2.5, 4, 0],
+      lookAt: [-2.5, 4, 1],
+    });
+
+    new MSDFTextNeon({
+      text: "Neon",
+      align: "center",
+      width: 500,
+      ptSize: 0.01,
+      position: [-2.5, 6, 0],
+      lookAt: [-2.5, 6, 1],
+    });
+
+    new MSDFTextFire({
+      text: "DOOM",
+      align: "center",
+      width: 500,
+      ptSize: 0.01,
+      position: [-2.5, 8, 0],
+      lookAt: [-2.5, 8, 1],
+    });
+
+    new PlaneText();
 
     if (defaults.devMode) {
       this.stats = new Stats();

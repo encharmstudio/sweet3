@@ -7,7 +7,7 @@ import { defaults } from "../../../data";
 export class MSDFText {
   constructor({
     text = "Sample text",
-    fontName = "BungeeSpice", //AvenirNext // openSansSauce // BungeeSpice
+    fontName = "openSansSauce", //AvenirNext // openSansSauce // BungeeSpice
     align = "left",
     position,
     rotation,

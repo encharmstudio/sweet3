@@ -14,9 +14,8 @@ export class MSDFText {
     scale = 1,
     lookAt,
     width = 1000,
-    ptSize = .01,
+    ptSize = 0.01,
   } = {}) {
-    
     this.mesh = createMesh({
       geometry: new TextGeometry({
         width,
@@ -35,9 +34,16 @@ export class MSDFText {
     });
 
     if (defaults.devMode) {
-      console.log(text + " MSDF bounding box: ", this.mesh.geometry.computeBoundingBox());
+      console.log(
+        text + " MSDF bounding box: ",
+        this.mesh.geometry.computeBoundingBox()
+      );
     }
 
     Root.scene.add(this.mesh);
+  }
+
+  getMesh() {
+    return this.mesh;
   }
 }

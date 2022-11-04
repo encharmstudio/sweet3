@@ -44,7 +44,7 @@ export class PlaneText {
       map: this.rt.texture,
     });
     this.mesh = new Mesh(this.geometry, this.material);
-    this.mesh.position.set(0.0, 0.0, -2.5);
+    this.mesh.position.set(5.0, 4.0, -2.5);
     this.mesh.scale.set(1.0, 1.0, 1.0);
 
     Root.scene.add(this.mesh);
