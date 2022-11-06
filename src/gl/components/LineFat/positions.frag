@@ -20,9 +20,7 @@ void main() {
   vec3 result2 = mix(bonePosition, nextbonePosition, mixFactor);
 
   float targetFactor = step(.95, vUv.x);
-  result1 *= targetFactor;
-  result2 *= 1.0 - targetFactor;
-  vec3 result = result1 + result2;
+  vec3 result = mix(result2, result1, targetFactor);
 
   fragColor = vec4(result, 1.0);
 }

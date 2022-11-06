@@ -1,6 +1,5 @@
 import {
   WebGLRenderTarget,
-  PerspectiveCamera,
   OrthographicCamera,
   Scene,
   Color,
@@ -10,7 +9,7 @@ import {
 } from "three";
 
 import { Root } from "../../Root";
-import { EventBus } from "../../global/EventDispatcher";
+//import { EventBus } from "../../global/EventDispatcher";
 import { Material } from "./Material";
 import { MSDFText } from "../MSDFText";
 
@@ -32,7 +31,6 @@ export class PlaneText {
     this.rtCamera.position.x = 0.0;
     this.rtCamera.position.y = 2.0;
     this.rtCamera.position.z = 2.5;
-    // this.rtCamera.lookAt(0.0,-0.0,0.0);
     this.rtScene = new Scene();
     this.rtScene.background = new Color("#000000");
     this.groupText.scale.set(1.0, 1.0, 1.0);
@@ -63,9 +61,9 @@ export class PlaneText {
     // Root.renderPipe.renderer.setRenderTarget(null);
   };
 
-  getGroupText(){
-    //GroupText
-   let groupText = new Group();
+  getGroupText() {
+    
+    let groupText = new Group();
 
     this.MSDFText1 = new MSDFText({
       text: "The",
@@ -153,5 +151,5 @@ export class PlaneText {
     groupText.add(this.MSDFText7);
 
     return groupText;
-  };
+  }
 }

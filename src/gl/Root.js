@@ -98,6 +98,7 @@ export class Root {
       heightSegments: 128.0,
     });
     new Twist();
+    
     new MSDFTextCheker({
       text: "CHEKER",
       align: "center",
