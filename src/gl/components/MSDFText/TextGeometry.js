@@ -4,7 +4,7 @@ import createIndices from "quad-indices";
 import vertices from "./lib/vertices";
 import utils from "./lib/utils";
 
-export const createTextGeometry = opt => {
+export const createTextGeometry = (opt) => {
   return new TextGeometry(opt);
 };
 
@@ -24,7 +24,7 @@ export class TextGeometry extends BufferGeometry {
     if (opt) this.update(opt);
   }
 
-  update = opt => {
+  update = (opt) => {
     if (typeof opt === "string") {
       opt = { text: opt };
     }
@@ -69,7 +69,7 @@ export class TextGeometry extends BufferGeometry {
     const indices = createIndices([], {
       clockwise: true,
       type: "uint16",
-      count: glyphs.length
+      count: glyphs.length,
     });
 
     // update vertex data
@@ -102,9 +102,11 @@ export class TextGeometry extends BufferGeometry {
     }
     utils.computeSphere(positions, this.boundingSphere);
     if (isNaN(this.boundingSphere.radius)) {
-      console.error("THREE.BufferGeometry.computeBoundingSphere(): " +
-        "Computed radius is NaN. The " +
-        "\"position\" attribute is likely to have NaN values.");
+      console.error(
+        "THREE.BufferGeometry.computeBoundingSphere(): " +
+          "Computed radius is NaN. The " +
+          '"position" attribute is likely to have NaN values.'
+      );
     }
   };
 

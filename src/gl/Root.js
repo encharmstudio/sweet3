@@ -13,8 +13,10 @@ import { MSDFText } from "./components/MSDFText";
 import { LightsAndShadows } from "./components/LightsAndShadows";
 import { BackgroundColor } from "./components/BackgroundColor";
 
-export class Root {
+import { EndLess } from "./components/EndLess";
+import { PlaneText } from "./components/PlaneText";
 
+export class Root {
   /** @type { HTMLDivElement } */
   static container;
 
@@ -23,15 +25,15 @@ export class Root {
 
   /** @type { Screen } */
   static screen;
-  
+
   /** @type { Pipeline } */
   static pipeline;
-  
+
   /** @type { Context } */
   static context;
-  
+
   static settings = defaults;
-  
+
   /** @type { Root } */
   static #instance = null;
 
@@ -49,7 +51,7 @@ export class Root {
     Root.#instance = this;
 
     Root.settings = Object.assign(Root.settings, settings);
-    
+
     Root.assetsManager = new AssetsManager();
     Root.screen = new Screen();
     Root.pipeline = new Pipeline();
@@ -68,7 +70,7 @@ export class Root {
         bypassFX: true,
       },
     });
-    
+
     new Frame({
       contexts: [Root.context, textContext],
     });
@@ -87,7 +89,11 @@ export class Root {
       context: textContext,
     });
 
+    new EndLess();
+
+    new PlaneText();
+
     Root.pipeline.compile(Root.context);
     Root.pipeline.compile(textContext);
-  };  
+  };
 }

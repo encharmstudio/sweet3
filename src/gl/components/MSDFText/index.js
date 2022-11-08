@@ -15,11 +15,11 @@ export class MSDFText extends ContextualComponent {
     scale = 1,
     lookAt,
     width = 1000,
-    ptSize = .01,
+    ptSize = 0.01,
     context,
   } = {}) {
     super({ context });
-    
+
     this.mesh = createMesh({
       geometry: new TextGeometry({
         width,
@@ -38,9 +38,15 @@ export class MSDFText extends ContextualComponent {
     });
 
     if (Root.settings.devMode) {
-      console.log(text + " MSDF bounding box: ", this.mesh.geometry.computeBoundingBox());
+      console.log(
+        text + " MSDF bounding box: ",
+        this.mesh.geometry.computeBoundingBox()
+      );
     }
 
     this.scene.add(this.mesh);
+  }
+  getMesh() {
+    return this.mesh;
   }
 }
