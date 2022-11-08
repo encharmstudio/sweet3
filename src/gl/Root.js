@@ -78,13 +78,12 @@ export class Root {
     new LightsAndShadows();
     new Floor();
     new MSDFText({
-      text: "HI THERE",
-      align: "center",
-      width: 500,
-      ptSize: 0.01,
-      position: [-2.5, 1, 0],
-      lookAt: [-2.5, 1, 1],
-      context: textContext,
+      text: "HI THERE\nTest",
+      align: MSDFText.AlignLeft,
+      originAtY: MSDFText.OriginBottom,
+      fontSize: 0.8,
+      position: [0, 1, 0],
+      // context: textContext,
     });
 
     Root.pipeline.compile(Root.context);

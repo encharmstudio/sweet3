@@ -3,6 +3,7 @@ import createLayout from "layout-bmfont-text";
 import createIndices from "quad-indices";
 import vertices from "./lib/vertices";
 import utils from "./lib/utils";
+import { MSDFText } from ".";
 
 export const createTextGeometry = opt => {
   return new TextGeometry(opt);
@@ -36,9 +37,13 @@ export class TextGeometry extends BufferGeometry {
       throw new TypeError("must specify a { font } in options");
     }
 
-    this.layout = createLayout(opt);
+    const ptSize = opt.fontSize ? opt.fontSize / opt.font.common.lineHeight : 1;
 
-    const ptSize = opt.ptSize || 1;
+    if (opt.width) {
+      opt.width /= ptSize;
+    }
+
+    this.layout = createLayout(opt);
 
     // get vec2 texcoords
     const flipY = opt.flipY !== false;
@@ -76,6 +81,29 @@ export class TextGeometry extends BufferGeometry {
     this.setIndex(indices);
     this.setAttribute("position", new BufferAttribute(positions, 2));
     this.setAttribute("uv", new BufferAttribute(uvs, 2));
+
+    const bbox = this.computeBoundingBox();
+    let dx, dy;
+    switch (opt.originAtX) {
+    case MSDFText.OriginRight:
+      dx = bbox.max.x; break;
+    case MSDFText.OriginLeft:
+      dx = bbox.min.x; break;
+    default:
+      dx = 0.5 * (bbox.min.x + bbox.max.x);
+    }
+    switch (opt.originAtY) {
+    case MSDFText.OriginTop:
+      dy = bbox.max.y; break;
+    case MSDFText.OriginBottom:
+      dy = bbox.min.y; break;
+    default:
+      dy = 0.5 * (bbox.min.y + bbox.max.y);
+    }
+    for (let i = 0; i < positions.length; i += 2) {
+      positions[i] -= dx;
+      positions[i + 1] -= dy;
+    }
 
     // update multipage data
     if (!opt.multipage && "page" in this.attributes) {

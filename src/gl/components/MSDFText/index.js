@@ -6,27 +6,44 @@ import { TextGeometry } from "./TextGeometry";
 import { MSDFMaterial } from "./MSDFMaterial";
 
 export class MSDFText extends ContextualComponent {
+
+  static get AlignLeft() { return "left"; }
+  static get AlignCenter() { return "center"; }
+  static get AlignRight() { return "right"; }
+
+  static get OriginCenter() { return "center"; }
+  static get OriginLeft() { return "left"; }
+  static get OriginRight() { return "right"; }
+  static get OriginTop() { return "top"; }
+  static get OriginBottom() { return "bottom"; }
+
   constructor({
     text = "Sample text",
     fontName = "openSansSauce",
-    align = "left",
+    align = MSDFText.AlignLeft,
+    originAtX = align,
+    originAtY = MSDFText.OriginBottom,
+    maxWidth = undefined,
+    fontSize = 0.1,
+
     position,
     rotation,
     scale = 1,
     lookAt,
-    width = 1000,
-    ptSize = .01,
+
     context,
   } = {}) {
     super({ context });
-    
+
     this.mesh = createMesh({
       geometry: new TextGeometry({
-        width,
-        align,
         font: Root.assetsManager.get(fontName),
         text,
-        ptSize,
+        fontSize,
+        align,
+        width: maxWidth,
+        originAtX,
+        originAtY,
       }),
       material: new MSDFMaterial({
         map: Root.assetsManager.get(fontName + ".texture"),
