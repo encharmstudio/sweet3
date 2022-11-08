@@ -1,25 +1,29 @@
 export class JSONLoader {
   constructor(manager) {
-    this.manager = manager
+    this.manager = manager;
   }
 
   load = (url, onLoad, onProgress, onError) => {
     if (this.path !== undefined) {
-      url = this.path + url
+      url = this.path + url;
     }
-		url = this.manager.resolveURL(url)
-    this.manager.itemStart(url)
+    url = this.manager.resolveURL(url);
+    this.manager.itemStart(url);
     
     setTimeout(() => {
 
       fetch(url)
         .then(res => res.json())
         .then(json => {
-          onLoad(json)
-          this.manager.itemEnd(url)
+          onLoad(json);
+          this.manager.itemEnd(url);
         })
-        .catch(onError)
+        .catch(error => {
+          if (onError) onError(error);
+          this.manager.itemError(url);
+          this.manager.itemEnd(url);
+        });
 
-    }, 1000)
-  }
+    }, 0);
+  };
 }
