@@ -18,7 +18,7 @@ export class Material extends MeshStandardMaterial {
     tDiffuse,
     tDepth,
     tDiffuseBlur,
-    color = 0x303030,
+    color = 0x181818,
   }) {
     const map = Root.assetsManager.get("floor.diffuse"),
           normalMap = Root.assetsManager.get("floor.normal"),
@@ -34,7 +34,7 @@ export class Material extends MeshStandardMaterial {
         USE_DEPTH: depthScale > 0 ? "" : undefined,
         USE_DISTORTION: distortionMap ? "" : undefined,  
       },
-      roughness: 1,
+      roughness: 0,
       metalness: 0,
       envMapIntensity: 0,
       map,
