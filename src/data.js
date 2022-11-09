@@ -20,6 +20,7 @@ export const defaults = {
       },
     },
   },
+  progress: 0.0,
 };
 
 export const assets = {

@@ -15,6 +15,11 @@ import { BackgroundColor } from "./components/BackgroundColor";
 
 import { EndLess } from "./components/EndLess";
 import { PlaneText } from "./components/PlaneText";
+import { Twist } from "./components/Twist";
+import { Env } from "./components/Env";
+import { OrganicSphere } from "./components/OrganicSphere";
+import { LineFat } from "./components/LineFat";
+import { MSDFText as MSDFTextCheker } from "./components/MSDFTextCheker";
 
 export class Root {
   /** @type { HTMLDivElement } */
@@ -76,6 +81,7 @@ export class Root {
     });
     new Pointer();
     new CameraController();
+    new Env();
     new BackgroundColor();
     new LightsAndShadows();
     new Floor();
@@ -91,7 +97,24 @@ export class Root {
 
     new EndLess();
 
-    new PlaneText();
+    new PlaneText({ textContext: textContext });
+    new Twist();
+    new OrganicSphere({
+      radius: 7.0,
+      widthSegments: 128.0,
+      heightSegments: 128.0,
+    });
+    new LineFat();
+
+    new MSDFTextCheker({
+      text: "HI THERE",
+      align: "center",
+      width: 500,
+      ptSize: 0.01,
+      position: [-2.5, 3, 0],
+      lookAt: [-2.5, 3, 1],
+      context: textContext,
+    });
 
     Root.pipeline.compile(Root.context);
     Root.pipeline.compile(textContext);

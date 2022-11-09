@@ -59,8 +59,8 @@ export const renderFBO = (program, target) => {
   
   const renderTarget = target.isDFBO ? target.write : target;
 
-  Root.renderPipe.renderer.setRenderTarget(renderTarget);
-  Root.renderPipe.renderer.render(program, dummyCam);
+  Root.pipeline.renderer.setRenderTarget(renderTarget);
+  Root.pipeline.renderer.render(program, dummyCam);
 
   if (target.isDFBO) {
     target.swap();

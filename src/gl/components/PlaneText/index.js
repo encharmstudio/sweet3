@@ -14,8 +14,9 @@ import { Material } from "./Material";
 import { MSDFText } from "../MSDFText";
 
 export class PlaneText extends ContextualComponent {
-  constructor(context) {
+  constructor({textContext,context}) {
     super({ context });
+    this.textContext = textContext; 
     //GroupText
     this.groupText = this.getGroupText();
 
@@ -64,6 +65,7 @@ export class PlaneText extends ContextualComponent {
 
   getGroupText() {
     let groupText = new Group();
+    let textContext = this.textContext;
 
     this.MSDFText1 = new MSDFText({
       text: "The",
@@ -74,6 +76,7 @@ export class PlaneText extends ContextualComponent {
       lookAt: undefined,
       fontName: "OPENSAUCESANSLIGTH",
       scale: [1.02, 1.02, 1.02],
+      context:textContext,
     }).getMesh();
 
     this.MSDFText2 = new MSDFText({
@@ -85,6 +88,7 @@ export class PlaneText extends ContextualComponent {
       lookAt: undefined,
       fontName: "OPENSAUCESANSBOLD",
       scale: [1.02, 1.02, 1.02],
+      context: textContext,
     }).getMesh();
 
     this.MSDFText3 = new MSDFText({
@@ -96,6 +100,7 @@ export class PlaneText extends ContextualComponent {
       lookAt: undefined,
       fontName: "OPENSAUCESANSBOLD",
       scale: [1.02, 1.02, 1.02],
+      context: textContext,
     }).getMesh();
 
     this.MSDFText4 = new MSDFText({
@@ -107,6 +112,7 @@ export class PlaneText extends ContextualComponent {
       lookAt: undefined,
       fontName: "OPENSAUCESANSLIGTH",
       scale: [1.03, 1.03, 1.03],
+      context: textContext,
     }).getMesh();
 
     this.MSDFText5 = new MSDFText({
@@ -118,6 +124,7 @@ export class PlaneText extends ContextualComponent {
       lookAt: undefined,
       fontName: "OPENSAUCESANSLIGTH",
       scale: [0.375, 0.375, 1.0],
+      context: textContext,
     }).getMesh();
 
     this.MSDFText6 = new MSDFText({
@@ -129,6 +136,7 @@ export class PlaneText extends ContextualComponent {
       lookAt: undefined,
       fontName: "ATSURT",
       scale: [0.39, 0.39, 0.39],
+      context: textContext,
     }).getMesh();
 
     this.MSDFText7 = new MSDFText({
@@ -140,6 +148,7 @@ export class PlaneText extends ContextualComponent {
       lookAt: undefined,
       fontName: "ATSURT",
       scale: [0.39, 0.39, 0.39],
+      context: textContext,
     }).getMesh();
 
     groupText.add(this.MSDFText1);
