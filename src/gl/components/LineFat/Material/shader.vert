@@ -8,9 +8,7 @@ varying vec3 vColor;
 
 varying vec3 vNormalView;
 varying vec3 vPosToCam;
-varying vec3 vPosToCamView;
 
-uniform vec3 up;
 uniform vec2 texelSize;
 uniform sampler2D positionsMap;
 uniform sampler2D normalsMap;

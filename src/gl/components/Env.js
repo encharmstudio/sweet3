@@ -1,7 +1,7 @@
 import {
   BackSide,
   ShaderMaterial,
-  SphereBufferGeometry,
+  SphereGeometry,
   EquirectangularReflectionMapping,
 } from "three";
 import { Root } from "../Root";
@@ -15,7 +15,7 @@ export class Env extends ContextualComponent {
     super({ context });
     this.scene.add(
       createMesh({
-        geometry: new SphereBufferGeometry(1e3),
+        geometry: new SphereGeometry(1e3),
         material: new ShaderMaterial({
           uniforms: {
             map: { value: Root.assetsManager.get("envMap") },

@@ -1,4 +1,4 @@
-import { ShaderMaterial, Vector3, DoubleSide, BackSide } from "three";
+import { ShaderMaterial, Vector3, BackSide } from "three";
 import { bind } from "../../../global/Uniforms";
 
 import vertexShader from "./shader.vert";
