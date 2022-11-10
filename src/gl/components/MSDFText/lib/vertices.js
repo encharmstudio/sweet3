@@ -16,8 +16,8 @@ export function uvs(glyphs, texWidth, texHeight, flipY) {
   var i = 0;
   glyphs.forEach(function (glyph) {
     var bitmap = glyph.data;
-    var bw = (bitmap.x + bitmap.width);
-    var bh = (bitmap.y + bitmap.height);
+    var bw = bitmap.x + bitmap.width;
+    var bh = bitmap.y + bitmap.height;
 
     // top left position
     var u0 = bitmap.x / texWidth;
@@ -76,8 +76,35 @@ export function positions(glyphs) {
   return positions;
 }
 
+export function layoutUvs(glyphs, layout) {
+  const layoutUvs = new Float32Array(glyphs.length * 4 * 2);
+  let l = 0;
+  glyphs.forEach(function (glyph) {
+    let bitmap = glyph.data;
+    /// Layout UV: Text block UVS
+
+    // BL
+    layoutUvs[l++] = glyph.position[0] / layout.width;
+    layoutUvs[l++] = (glyph.position[1] + layout.height) / layout.height;
+
+    // TL
+    layoutUvs[l++] = glyph.position[0] / layout.width;
+    layoutUvs[l++] =
+      (glyph.position[1] + layout.height + bitmap.height) / layout.height;
+    // TR
+    layoutUvs[l++] = (glyph.position[0] + bitmap.width) / layout.width;
+    layoutUvs[l++] =
+      (glyph.position[1] + layout.height + bitmap.height) / layout.height;
+    // BR
+    layoutUvs[l++] = (glyph.position[0] + bitmap.width) / layout.width;
+    layoutUvs[l++] = (glyph.position[1] + layout.height) / layout.height;
+  });
+  return layoutUvs;
+}
+
 export default {
   positions,
   uvs,
   pages,
+  layoutUvs,
 };

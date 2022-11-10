@@ -1,6 +1,5 @@
 import { SphereGeometry } from "three";
 import { EventBus } from "../../global/EventDispatcher";
-import { Root } from "../../Root";
 import { createMesh } from "../../util/objectSugar";
 import { Material } from "./Material";
 import { ContextualComponent } from "../Foundation/ContextualComponent";

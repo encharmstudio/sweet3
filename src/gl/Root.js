@@ -19,7 +19,6 @@ import { Twist } from "./components/Twist";
 import { Env } from "./components/Env";
 import { OrganicSphere } from "./components/OrganicSphere";
 import { LineFat } from "./components/LineFat";
-import { MSDFText as MSDFTextCheker } from "./components/MSDFTextCheker";
 
 export class Root {
   /** @type { HTMLDivElement } */
@@ -105,16 +104,6 @@ export class Root {
       heightSegments: 128.0,
     });
     new LineFat();
-
-    new MSDFTextCheker({
-      text: "HI THERE",
-      align: "center",
-      width: 500,
-      ptSize: 0.01,
-      position: [-2.5, 3, 0],
-      lookAt: [-2.5, 3, 1],
-      context: textContext,
-    });
 
     Root.pipeline.compile(Root.context);
     Root.pipeline.compile(textContext);

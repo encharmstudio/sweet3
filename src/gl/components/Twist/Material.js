@@ -9,10 +9,10 @@ export class Material extends MeshPhysicalMaterial {
       metalness: 1.0,
       thickness: 0.1,
     });
-  
+
     this.onBeforeCompile = (shader) => {
       shader.uniforms.time = bind("time");
-      
+
       shader.vertexShader =
         /*glsl*/ `
         uniform float time;
@@ -55,10 +55,8 @@ export class Material extends MeshPhysicalMaterial {
         newpos = rotate(newpos, axes, localprogress);
         vec3 newnormal = rotate(normal, axes, localprogress);
         vNormal = normalMatrix*newnormal;   
-        transformed = newpos.xyz;`        
+        transformed = newpos.xyz;`
       );
     };
   }
 }
-
-

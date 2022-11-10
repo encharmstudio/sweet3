@@ -72,10 +72,19 @@ export class TextGeometry extends BufferGeometry {
       count: glyphs.length,
     });
 
+    const layoutUvs = vertices.layoutUvs(
+      glyphs,
+      texWidth,
+      texHeight,
+      flipY,
+      this.layout
+    );
+
     // update vertex data
     this.setIndex(indices);
     this.setAttribute("position", new BufferAttribute(positions, 2));
     this.setAttribute("uv", new BufferAttribute(uvs, 2));
+    this.setAttribute("layoutUvs", new BufferAttribute(layoutUvs, 2));
 
     // update multipage data
     if (!opt.multipage && "page" in this.attributes) {

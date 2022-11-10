@@ -8,3 +8,4 @@ void main() {
   vLayoutUv = layoutUvs;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);
 }
+

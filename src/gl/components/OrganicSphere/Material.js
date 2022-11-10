@@ -9,11 +9,11 @@ export class Material extends MeshPhysicalMaterial {
       roughness: 0.0,
       metalness: 1.0,
       thickness: 0.5,
-    });  
+    });
 
     this.onBeforeCompile = (shader) => {
       shader.uniforms.time = bind("time");
-      shader.uniforms.uSubdivision = {value: new Vector2(128.0, 128.0)};
+      shader.uniforms.uSubdivision = { value: new Vector2(128.0, 128.0) };
 
       shader.vertexShader =
         /*glsl*/ `
@@ -199,5 +199,3 @@ export class Material extends MeshPhysicalMaterial {
     };
   }
 }
-
-
