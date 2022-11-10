@@ -47,8 +47,8 @@ uniform vec2 resolution;
   #define FXAA_DISCARD 0
 #endif
 /*--------------------------------------------------------------------------*/
-#define FxaaTexTop(t, p) texture2D(t, p, -100.0)
-#define FxaaTexOff(t, p, o, r) texture2D(t, p + (o * r), -100.0)
+#define FxaaTexTop(t, p) texture2D(t, p, -16.0)
+#define FxaaTexOff(t, p, o, r) texture2D(t, p + (o * r), -16.0)
 /*--------------------------------------------------------------------------*/
 #define NUM_SAMPLES 5
 // assumes colors have premultipliedAlpha, so that the calculated color contrast is scaled by alpha
