@@ -76,7 +76,7 @@ export function positions(glyphs) {
   return positions;
 }
 
-export function layoutUvs(glyphs, layout) {
+export function layoutUvs(glyphs, texWidth, texHeight, flipY, layout) {
   const layoutUvs = new Float32Array(glyphs.length * 4 * 2);
   let l = 0;
   glyphs.forEach(function (glyph) {

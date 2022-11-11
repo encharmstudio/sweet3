@@ -34,7 +34,7 @@ export class OrganicSphere extends ContextualComponent {
     EventBus.on("frame", this.onFrame);
   }
 
-  onFrame = ({ seconds, ds }) => {
+  onFrame = ({ ds }) => {
     this.mesh.rotation.y += ds * 0.5;
   };
 }

@@ -47,14 +47,12 @@ export const assets = {
   doom: "fonts/doom/AmazDooMLeft-msdf.json",
   "doom.texture": "fonts/doom/DooM.png",
 
-  ATSURT: "fonts/ATSURT/ATSURT-LIGHT-1.TTF-msdf.json",
-  "ATSURT.texture": "fonts/ATSURT/ATSURT-LIGHT-1TTF.png",
+  atsurt: "fonts/atsurt/atsurt.json",
+  "atsurt.texture": "fonts/atsurt/atsurt.png",
 
-  OPENSAUCESANSBOLD:
-    "fonts/OPENSAUCESANS/BOLD/OPENSAUCESANS-BOLD.TTF-msdf.json",
-  "OPENSAUCESANSBOLD.texture": "fonts/OPENSAUCESANS/BOLD/OPENSAUCESANS-BOLDTTF.png",
+  opensaucesansbold: "fonts/oss/bold.json",
+  "opensaucesansbold.texture": "fonts/oss/bold.png",
 
-  OPENSAUCESANSLIGTH:
-    "fonts/OPENSAUCESANS/LIGTH/OPENSAUCESANS-LIGHT.TTF-msdf.json",
-  "OPENSAUCESANSLIGTH.texture": "fonts/OPENSAUCESANS/LIGTH/OPENSAUCESANS-LIGHTTTF.png",    
+  opensaucesansligth: "fonts/oss/ligth.json",
+  "opensaucesansligth.texture": "fonts/oss/ligth.png",
 };

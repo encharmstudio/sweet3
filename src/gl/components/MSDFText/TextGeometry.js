@@ -114,7 +114,7 @@ export class TextGeometry extends BufferGeometry {
       console.error(
         "THREE.BufferGeometry.computeBoundingSphere(): " +
           "Computed radius is NaN. The " +
-          '"position" attribute is likely to have NaN values.'
+          "\"position\" attribute is likely to have NaN values."
       );
     }
   };

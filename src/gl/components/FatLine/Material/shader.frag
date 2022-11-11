@@ -13,8 +13,10 @@ void main() {
   gl_FragColor = vec4(normalize(vPosToCam), 1.0);
   gl_FragColor = vec4(vec3(d), 0.5);
 
-  if(d < 0.5) {
+  if (d < 0.5) {
     discard;
   }
-  gl_FragColor = vec4(vColor, d * d * d * d * d * d * (vUv.y));
+  d *= d;
+  float d4 = d * d;
+  gl_FragColor = vec4(vColor, d * d4 *  (vUv.y));
 }

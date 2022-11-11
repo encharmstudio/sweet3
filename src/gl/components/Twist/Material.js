@@ -34,27 +34,27 @@ export class Material extends MeshPhysicalMaterial {
         
         float qinticInOut(float t) {
           return t < 0.5
-          ? +16.0 * pow(t, 5.0)
+          ? 16.0 * pow(t, 5.0)
           : -0.5 * abs(pow(2.0 * t - 2.0, 5.0)) + 1.0;
         }  
-     ` + shader.vertexShader;
+      ` + shader.vertexShader;
       shader.vertexShader = shader.vertexShader.replace(
         "#include <displacementmap_vertex>",
         /*glsl*/ `#include <displacementmap_vertex>
-       
+        
         vec4 newposition = vec4(position, 1.0);
         vec3 axes = vec3(0., 1., 0.);
         float norm = 0.5;
         vec3 newpos = position;
-        float offset = ( dot(axes, position) +norm/2.)/norm;
+        float offset = (dot(axes, position) + norm / 2.) / norm;
         float speed = 0.0005;
         float distortion = 5.0;
         
-        float localprogress = clamp( (fract(time*speed) - 0.01*distortion*offset)/(1. - 0.01*distortion), 0., 1.);
-        localprogress = qinticInOut(localprogress)*PI;
+        float localprogress = clamp((fract(time * speed) - 0.01 * distortion * offset) / (1. - 0.01 * distortion), 0., 1.);
+        localprogress = qinticInOut(localprogress) * PI;
         newpos = rotate(newpos, axes, localprogress);
         vec3 newnormal = rotate(normal, axes, localprogress);
-        vNormal = normalMatrix*newnormal;   
+        vNormal = normalMatrix * newnormal;   
         transformed = newpos.xyz;`
       );
     };

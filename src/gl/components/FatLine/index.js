@@ -19,8 +19,8 @@ import vertexGPGPU from "./gpgpu.vert";
 import positionsFrag from "./positions.frag";
 import normalsFrag from "./normals.frag";
 
-export class LineFat extends ContextualComponent {
-  constructor(context) {
+export class FatLine extends ContextualComponent {
+  constructor({ context } = {}) {
     super({ context });
     const sectionsCount = 25;
     this.targetV3 = new Vector3();

@@ -18,7 +18,7 @@ import { PlaneText } from "./components/PlaneText";
 import { Twist } from "./components/Twist";
 import { Env } from "./components/Env";
 import { OrganicSphere } from "./components/OrganicSphere";
-import { LineFat } from "./components/LineFat";
+import { FatLine } from "./components/FatLine";
 
 export class Root {
   /** @type { HTMLDivElement } */
@@ -95,15 +95,14 @@ export class Root {
     });
 
     new EndLess();
-
-    new PlaneText({ textContext: textContext });
+    new PlaneText();
     new Twist();
     new OrganicSphere({
       radius: 7.0,
       widthSegments: 128.0,
       heightSegments: 128.0,
     });
-    new LineFat();
+    new FatLine();
 
     Root.pipeline.compile(Root.context);
     Root.pipeline.compile(textContext);

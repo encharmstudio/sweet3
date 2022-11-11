@@ -6,6 +6,9 @@ import { bind } from "../../../global/Uniforms";
 
 export class Material extends ShaderMaterial {
   constructor({ map } = {}) {
+    if(map == undefined){
+      console.error("Endless/Material/index  map == undefined");
+    }
     super({
       uniforms: {
         map: { value: map },

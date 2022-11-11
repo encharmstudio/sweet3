@@ -20,7 +20,7 @@ export class Twist extends ContextualComponent {
 
     this.mesh.position.set(-5.0, 2.0, 0.0);
     this.mesh.rotateZ(3.1415 * 0.5);
-    this.mesh.scale.set(0.5, 0.5, 0.5);
+    this.mesh.scale.setScalar(0.5);
     this.scene.add(this.mesh);
   }
 }
