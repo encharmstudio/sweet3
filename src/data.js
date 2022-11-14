@@ -21,6 +21,9 @@ export const defaults = {
     },
   },
   progress: 0.0,
+  uLimitCurve: 0.0,
+  uLimitShear: 0.0,
+  wave: 0.0,
 };
 
 export const assets = {

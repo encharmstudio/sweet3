@@ -49,7 +49,7 @@ export class Pipeline {
 
     this.fx = [
       new FXAA(),
-      new Anaglyph(),
+      //new Anaglyph(),
       new Bloom(),
       new Halo(),
       new ACESToneMapping(),

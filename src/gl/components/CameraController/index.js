@@ -15,8 +15,10 @@ export class CameraController extends ContextualComponent {
     this.controls.enableDamping = true;
     this.controls.dampingFactor = .1;
 
-    this.camera.position.set(0, 2, 7);
+    this.camera.position.set(0, 2, 20);
     this.controls.target.set(0, 0.75, 0);
+
+    this.controls.enableZoom = false;
 
     if (Root.settings.devMode) {
 

@@ -19,6 +19,7 @@ import { Twist } from "./components/Twist";
 import { Env } from "./components/Env";
 import { OrganicSphere } from "./components/OrganicSphere";
 import { FatLine } from "./components/FatLine";
+import { Greta } from "./components/Greta";
 
 export class Root {
   /** @type { HTMLDivElement } */
@@ -84,25 +85,26 @@ export class Root {
     new BackgroundColor();
     new LightsAndShadows();
     new Floor();
-    new MSDFText({
-      text: "HI THERE",
-      align: "center",
-      width: 500,
-      ptSize: 0.01,
-      position: [-2.5, 1, 0],
-      lookAt: [-2.5, 1, 1],
-      context: textContext,
-    });
+    // new MSDFText({
+    //   text: "HI THERE",
+    //   align: "center",
+    //   width: 500,
+    //   ptSize: 0.01,
+    //   position: [-2.5, 1, 0],
+    //   lookAt: [-2.5, 1, 1],
+    //   context: textContext,
+    // });
 
-    new EndLess();
-    new PlaneText();
-    new Twist();
-    new OrganicSphere({
-      radius: 7.0,
-      widthSegments: 128.0,
-      heightSegments: 128.0,
-    });
-    new FatLine();
+    // new EndLess();
+    // new PlaneText();
+    // new Twist();
+    // new OrganicSphere({
+    //   radius: 7.0,
+    //   widthSegments: 128.0,
+    //   heightSegments: 128.0,
+    // });
+    // new FatLine();
+    new Greta();
 
     Root.pipeline.compile(Root.context);
     Root.pipeline.compile(textContext);

@@ -22,11 +22,11 @@ export class PlaneText extends ContextualComponent {
       }),
     });
     //GroupText
-    this.groupText = this.getGroupText();
+    this.groupText = this.buildTextGroup();
 
     // Render Target setup
     this.rt = new WebGLRenderTarget(2048, 2048);
-   
+
     // main Mesh setup
     this.geometry = new PlaneGeometry(7, 7);
     this.material = new Material({
@@ -53,7 +53,7 @@ export class PlaneText extends ContextualComponent {
     // Root.renderPipe.renderer.setRenderTarget(null);
   };
 
-  getGroupText() {
+  buildTextGroup() {
     const context = this.textContext;
 
     this.MSDFText1 = new MSDFText({
