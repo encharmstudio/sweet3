@@ -58,4 +58,13 @@ export const assets = {
 
   opensaucesansligth: "fonts/oss/ligth.json",
   "opensaucesansligth.texture": "fonts/oss/ligth.png",
+
+  greta0: "textures/greta/1.jpg",
+  greta1: "textures/greta/2.jpg",
+  greta2: "textures/greta/3.jpg",
+  greta3: "textures/greta/4.jpg",
+  greta4: "textures/greta/1.jpg",
+  greta5: "textures/greta/2.jpg",
+  greta6: "textures/greta/3.jpg",
+  greta7: "textures/greta/4.jpg",
 };

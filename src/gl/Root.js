@@ -20,6 +20,7 @@ import { Env } from "./components/Env";
 import { OrganicSphere } from "./components/OrganicSphere";
 import { FatLine } from "./components/FatLine";
 import { Greta } from "./components/Greta";
+import { Kernel } from "./components/Kernel";
 
 export class Root {
   /** @type { HTMLDivElement } */
@@ -84,7 +85,7 @@ export class Root {
     new Env();
     new BackgroundColor();
     new LightsAndShadows();
-    new Floor();
+    //new Floor();
     // new MSDFText({
     //   text: "HI THERE",
     //   align: "center",
@@ -104,7 +105,8 @@ export class Root {
     //   heightSegments: 128.0,
     // });
     // new FatLine();
-    new Greta();
+    //new Greta();
+    new Kernel();
 
     Root.pipeline.compile(Root.context);
     Root.pipeline.compile(textContext);

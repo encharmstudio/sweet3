@@ -14,7 +14,7 @@ void main() {
     float p = wave;
     
     float normalizedY = vUv.y;
-    float offsetCurve = uLimitCurve * 1.0;
+    //float offsetCurve = uLimitCurve * 1.0;
     // float speed = shear;
     float offset = normalizedY * normalizedY * uShear * 2.0;
     displaced.x -= -1.0 * offset ; // Curve

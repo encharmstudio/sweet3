@@ -18,7 +18,7 @@ export class CameraController extends ContextualComponent {
     this.camera.position.set(0, 2, 20);
     this.controls.target.set(0, 0.75, 0);
 
-    this.controls.enableZoom = false;
+    this.controls.enableZoom = true;
 
     if (Root.settings.devMode) {
 
