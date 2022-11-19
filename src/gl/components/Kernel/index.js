@@ -1,4 +1,4 @@
-import { BoxGeometry } from "three";
+import { BoxGeometry ,Quaternion ,Vector3} from "three";
 import { EventBus } from "../../global/EventDispatcher";
 import { createMesh } from "../../util/objectSugar";
 import { Material } from "./Material";
@@ -44,6 +44,8 @@ export class Kernel extends ContextualComponent {
   }
 
   onFrame = ({ ds }) => {
-    this.mesh.rotation.y += ds * 0.5;
+    this.mesh.rotation.y += ds * 0.1;
   };
+
+
 }

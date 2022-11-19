@@ -174,6 +174,21 @@ export class Material extends MeshPhysicalMaterial {
         );
       }
       float amp = 0.1;
+      
+      mat4 rotationMatrix(vec3 axis, float angle) {
+
+          axis = normalize(axis);
+          float s = sin(angle);
+          float c = cos(angle);
+          float oc = 1.0 - c;
+
+          return mat4(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s, 0.0, oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s, 0.0, oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c, 0.0, 0.0, 0.0, 0.0, 1.0);
+        }
+
+        vec3 rotate(vec3 v, vec3 axis, float angle) {
+          mat4 m = rotationMatrix(axis, angle);
+          return (m * vec4(v, 1.0)).xyz;
+        }
      ` + shader.vertexShader;
       shader.vertexShader = shader.vertexShader.replace(
         "#include <displacementmap_vertex>",
@@ -185,6 +200,13 @@ export class Material extends MeshPhysicalMaterial {
       if(uv.y >= wave - 0.1 && uv.y <= wave){
         normal_Y = normal;
       } 
+
+      //twist 
+      vec3 axes = vec3(0., 1., 0.);
+      transformed = rotate(transformed, axes, wave * transformed.y);
+      normal_Y = rotate(normal_Y, axes, wave * transformed.y);
+      //transformed 
+
 
       vec3 dipslacedposition = transformed + amp * normal_Y  * distorted_position(transformed);
 

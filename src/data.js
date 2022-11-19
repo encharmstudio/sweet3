@@ -24,6 +24,7 @@ export const defaults = {
   uLimitCurve: 0.0,
   uLimitShear: 0.0,
   wave: 0.0,
+  twist: 0.0,
 };
 
 export const assets = {
