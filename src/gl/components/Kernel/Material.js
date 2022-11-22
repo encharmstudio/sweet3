@@ -202,10 +202,10 @@ export class Material extends MeshPhysicalMaterial {
       } 
 
       //twist 
-      vec3 axes = vec3(0., 1., 0.);
-      transformed = rotate(transformed, axes, wave * transformed.y);
-      normal_Y = rotate(normal_Y, axes, wave * transformed.y);
-      //transformed 
+      // vec3 axes = vec3(0., 1., 0.);
+      // transformed = rotate(transformed, axes, wave * transformed.y);
+      // normal_Y = rotate(normal_Y, axes, wave * transformed.y);
+      // //transformed 
 
 
       vec3 dipslacedposition = transformed + amp * normal_Y  * distorted_position(transformed);
@@ -224,7 +224,8 @@ export class Material extends MeshPhysicalMaterial {
       vec3 dipslacedBitangent = normalize(displacedN2 - dipslacedposition);
       vec3 dipslacedNormal = normalize(cross(dipslacedBitangent, dipslacedTangent));
  
-      if(normal_Y == normal || uv.y >= 0.99 || (uv.y >= wave - 0.1 && uv.y <= wave)){
+      //if(normal_Y == normal || uv.y >= 0.99 || (uv.y >= wave - 0.1 && uv.y <= wave)){
+        if(normal_Y == normal  || (uv.y >= wave - 0.1 && uv.y <= wave)){
        vNormal = normalMatrix * dipslacedNormal;  
       }else{
        vNormal = normalMatrix * normal; 
