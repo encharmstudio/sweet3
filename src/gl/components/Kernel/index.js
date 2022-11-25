@@ -2,6 +2,7 @@ import { BoxGeometry ,Quaternion ,Vector3} from "three";
 import { EventBus } from "../../global/EventDispatcher";
 import { createMesh } from "../../util/objectSugar";
 import { Material } from "./Material";
+import { Root } from "../../Root";
 import { ContextualComponent } from "../Foundation/ContextualComponent";
 
 export class Kernel extends ContextualComponent {
@@ -22,18 +23,24 @@ export class Kernel extends ContextualComponent {
     this.heightSegments = heightSegments;
     this.depthSegments = depthSegments;
 
-    this.mesh = createMesh({
-      name: "Kernel",
-      geometry: new BoxGeometry(
-        this.width,
-        this.height,
-        this.depth,
-        this.widthSegments,
-        this.heightSegments,
-        this.depthSegments
-      ),
-      material: new Material(),
-    });
+    // this.mesh = createMesh({
+    //   name: "Kernel",
+    //   geometry: new BoxGeometry(
+    //     this.width,
+    //     this.height,
+    //     this.depth,
+    //     this.widthSegments,
+    //     this.heightSegments,
+    //     this.depthSegments
+    //   ),
+    //   material: new Material(),
+    // });
+
+    
+    let mesh = Root.assetsManager.get("kernel");
+    this.mesh = mesh.scene.children[0]; 
+    this.mesh.material = new Material();
+
     this.mesh.geometry.computeTangents();
 
     this.mesh.position.set(-3.0, 1.0, 0.0);

@@ -68,4 +68,6 @@ export const assets = {
   greta5: "textures/greta/2.jpg",
   greta6: "textures/greta/3.jpg",
   greta7: "textures/greta/4.jpg",
+
+  kernel: "models/Box_With_UV2.glb",
 };
