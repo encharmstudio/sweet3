@@ -1,5 +1,5 @@
 import { Vector2, MeshPhysicalMaterial } from "three";
-import { bind ,} from "../../global/Uniforms";
+import { bind } from "../../global/Uniforms";
 import { guiSettingsBind } from "../../global/GUI";
 
 export class Material extends MeshPhysicalMaterial {
@@ -14,7 +14,7 @@ export class Material extends MeshPhysicalMaterial {
 
     this.onBeforeCompile = (shader) => {
       shader.uniforms.time = bind("time");
-      shader.uniforms.wave = guiSettingsBind("wave",0,1);
+      shader.uniforms.wave = guiSettingsBind("wave", 0, 1);
       shader.uniforms.uSubdivision = { value: new Vector2(128.0, 128.0) };
 
       shader.vertexShader =
@@ -2726,7 +2726,7 @@ vec4 Hermite3D_Deriv( vec3 P )
           abs(n.x)>abs(n.z) ? vec3(-n.y,n.x,0.0) :vec3(0.0,-n.z,n.y)
         );
       }
-      float amp = 0.2;
+      float amp = 0.5;
       
       mat4 rotationMatrix(vec3 axis, float angle) {
 
@@ -2750,8 +2750,8 @@ vec4 Hermite3D_Deriv( vec3 P )
       vec3 normal_Y = vec3(0.0,1.0,0.0);  
       vec3 n =  normalMatrix * normal_Y;
 
-      //if(uv.y >= wave - 0.1 && uv.y <= wave){
-      if(uv.y < wave){  
+      if(uv.y < wave && uv.y > (wave - 0.2)){
+      //if(uv.y < wave){  
         normal_Y = normal;
       } 
       //normal_Y = normal;
@@ -2783,15 +2783,18 @@ vec4 Hermite3D_Deriv( vec3 P )
       vec3 dipslacedBitangent = normalize(displacedN2 - dipslacedposition);
       vec3 dipslacedNormal = normalize(cross(dipslacedBitangent, dipslacedTangent));
  
-      // if(normal_Y == normal  || (uv.y <= wave - 1.5 && uv.y >= wave)){
-      if(normal_Y == normal  || ( uv.y < wave)){
-       vNormal = normalMatrix * dipslacedNormal;  
+      // if(normal_Y == normal || uv.y <= .99 || (uv.y <= wave - 1.0 && uv.y >= wave)){
+      if(normal_Y == normal || uv.y <= .2 ||  (uv.y < wave && uv.y > (wave - 0.2))){
+    //    vNormal = normalMatrix * mix(dipslacedNormal,normal,uv.y);
+    //    transformed =  mix(dipslacedposition,transformed,uv.y);  
+       vNormal = normalMatrix * dipslacedNormal;
+       transformed = mix(dipslacedposition,transformed,smoothstep( uv.y+0.3, uv.y, wave));  
       }else{
        vNormal = normalMatrix * normal; 
       }
 
       //vNormal = normalMatrix * dipslacedNormal;    
-      transformed = dipslacedposition; `
+      //transformed = dipslacedposition; `
       );
     };
   }
