@@ -1,14 +1,24 @@
 export class EventDispatcher {
   #listeners = {};
+  #offList = [];
+  #isDispatching = false;
 
   on = (type, callback) => {
-    if (!this.#listeners[type]) {
+    if (!(type in this.#listeners)) {
       this.#listeners[type] = [];
     }
     this.#listeners[type].push(callback);
   };
 
   off = (type, callback) => {
+    if (this.#isDispatching) {
+      this.#offList.push([type, callback]);
+    } else {
+      this.#off(type, callback);
+    }
+  };
+
+  #off = (type, callback) => {
     const arr = this.#listeners[type];
     if (arr) {
       let index = arr.indexOf(callback);
@@ -19,8 +29,19 @@ export class EventDispatcher {
   };
 
   dispatch = (type, data) => {
-    if (this.#listeners[type]) {
+    if (type in this.#listeners) {
+
+      this.#isDispatching = true;
+
       this.#listeners[type].forEach(callback => callback(data));
+
+      this.#isDispatching = false;
+
+      if (this.#offList.length > 0) {
+        this.#offList.forEach(([pair]) => this.#off(pair[0], pair[1]));
+        this.#offList.length = 0;
+      }
+
     }
   };
 }
