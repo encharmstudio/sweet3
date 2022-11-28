@@ -3,7 +3,7 @@ import { bind } from "../../global/Uniforms";
 import { guiSettingsBind } from "../../global/GUI";
 
 export class Material extends MeshPhysicalMaterial {
-  constructor() {
+  constructor(posY) {
     super({
       flatShading: false,
       transmission: 1.0,
@@ -14,7 +14,10 @@ export class Material extends MeshPhysicalMaterial {
 
     this.onBeforeCompile = (shader) => {
       shader.uniforms.time = bind("time");
-      shader.uniforms.wave = guiSettingsBind("wave", 0, 1);
+      shader.uniforms.wave = guiSettingsBind("wave", -1.3, 1.3);
+      shader.uniforms.top = guiSettingsBind("top", 0, 1);
+      shader.uniforms.twist = guiSettingsBind("twist", 0, 1.0);
+      shader.uniforms.posY = { value: posY };
       shader.uniforms.uSubdivision = { value: new Vector2(128.0, 128.0) };
 
       shader.vertexShader =
@@ -22,6 +25,9 @@ export class Material extends MeshPhysicalMaterial {
       uniform float time;
       uniform vec2 uSubdivision;
       uniform float wave;
+      uniform float top;
+      uniform float twist;
+      uniform vec2 posY;
 
       #define M_PI 3.1415926535897932384626433832795
       
@@ -160,8 +166,8 @@ export class Material extends MeshPhysicalMaterial {
         vec2 n_yzw = mix(n_zw.xy, n_zw.zw, fade_xyzw.y);
         float n_xyzw = mix(n_yzw.x, n_yzw.y, fade_xyzw.x);
         return 2.2 * n_xyzw;
-      }
-   
+    }
+
 
       ////////////////////
       ////////////////////
@@ -2709,92 +2715,95 @@ vec4 Hermite3D_Deriv( vec3 P )
 
 
 
-   
-      float distorted_position(vec3 p){
-        // float n1 = cnoise(vec4(p*0.05, time*0.001));
-        // float n2 = cnoise(vec4(p*0.05, n1)); 
-        
+
+    float distorted_position(vec3 p){
+              
         float n1 = Perlin4D(vec4(p*0.05, time*0.001));
-        float n2 = Perlin4D(vec4(p*0.05, n1));     
+        float n2 = Perlin4D(vec4(p*0.05, n1));   
+        
+        
         return n2;
-      }
+    }
 
-      
+    float map(float value, float min1, float max1, float min2, float max2) {
+        return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+    }
 
-      vec3 ortohonal(vec3 n){
+    vec3 ortohonal(vec3 n){
         return normalize(
-          abs(n.x)>abs(n.z) ? vec3(-n.y,n.x,0.0) :vec3(0.0,-n.z,n.y)
+        abs(n.x)>abs(n.z) ? vec3(-n.y,n.x,0.0) :vec3(0.0,-n.z,n.y)
         );
-      }
-      float amp = 0.5;
-      
-      mat4 rotationMatrix(vec3 axis, float angle) {
+    }
+    float amp = 0.5;
 
-          axis = normalize(axis);
-          float s = sin(angle);
-          float c = cos(angle);
-          float oc = 1.0 - c;
+    mat4 rotationMatrix(vec3 axis, float angle) {
+
+        axis = normalize(axis);
+        float s = sin(angle);
+        float c = cos(angle);
+        float oc = 1.0 - c;
 
           return mat4(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s, 0.0, oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s, 0.0, oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c, 0.0, 0.0, 0.0, 0.0, 1.0);
         }
 
         vec3 rotate(vec3 v, vec3 axis, float angle) {
-          mat4 m = rotationMatrix(axis, angle);
+        mat4 m = rotationMatrix(axis, angle);
           return (m * vec4(v, 1.0)).xyz;
         }
-     ` + shader.vertexShader;
+    
+
+         vec3 dipslaced(vec3 positionForDistort,float amp,float topInf,float waveInf){
+            vec3 vectorCommon =  amp * positionForDistort  *  distorted_position(positionForDistort);
+            vec3 dipslacedPositionVector =  vectorCommon * (waveInf + vec3(0.0,1.0,0.0) * topInf);  
+            return dipslacedPositionVector;
+         }
+
+    ` + shader.vertexShader;
       shader.vertexShader = shader.vertexShader.replace(
         "#include <displacementmap_vertex>",
         /*glsl*/ `#include <displacementmap_vertex>       
+  
+    float rangeWave = 0.5;
+    float norPosY = map(transformed.y,posY[0],posY[1], -1.0, 1.0);
+    vec3 normal_transformed = normal;
+
+    //twist 
+    vec3 axes = vec3(0., 1., 0.);
+    transformed = rotate(transformed, axes, twist * norPosY);
+    normal_transformed = rotate(normal_transformed, axes, twist * norPosY);
     
-      vec3 normal_Y = vec3(0.0,1.0,0.0);  
-      vec3 n =  normalMatrix * normal_Y;
+    //smoothstep for Top
+    float k1 = max(0.0, 1.0-(abs(1.0-norPosY))/0.1);
+    float topInf = k1*k1*(3.0-2.0*k1);
+    topInf = mix(0.0,topInf,top);
+    
+    //smoothstep for Wave
+    float k = max(0.0, 1.0-(abs(wave-norPosY))/rangeWave);
+    float waveInf = k*k*(3.0-2.0*k);
+    k = max(0.0, 1.0-(abs(0.0-norPosY)) / 1.3);
+    float waveInfFade = k*k*(3.0-2.0*k);
+    waveInf = waveInf * waveInfFade;    
+        
+    //Position
+    vec3 dipslacedposition = dipslaced(transformed,amp,topInf,waveInf) + transformed;
 
-      if(uv.y < wave && uv.y > (wave - 0.2)){
-      //if(uv.y < wave){  
-        normal_Y = normal;
-      } 
-      //normal_Y = normal;
+    //Normal
+    vec3 tangent = ortohonal(normal_transformed ); 
+    vec3 bitangent = normalize(cross(tangent, normal_transformed ));
 
-      // //twist 
-      // vec3 axes = vec3(0., 1., 0.);
-      // transformed = rotate(transformed, axes, wave * transformed.y);
-      // normal_Y = rotate(normal_Y, axes, wave * transformed.y);
-      // //transformed 
-
-
-      //vec3 dipslacedposition = transformed + amp * normal_Y  * distorted_position(transformed);
-      vec3 dipslacedposition = transformed + amp *  transformed * distorted_position(transformed);
-
-      vec3 tangent = ortohonal(normal_Y );
-      vec3 bitangent = normalize(cross(tangent, normal_Y ));
-
-      vec3 neighbour1 = transformed + tangent * 0.001;
-      vec3 neighbour2 = transformed + bitangent * 0.001;
-
-      // vec3 displacedN1 = neighbour1 + amp * normal_Y  * distorted_position(neighbour1);
-      // vec3 displacedN2 = neighbour2 + amp * normal_Y  * distorted_position(neighbour2);
-
-      vec3 displacedN1 = neighbour1 + amp * transformed  * distorted_position(neighbour1);
-      vec3 displacedN2 = neighbour2 + amp * transformed  * distorted_position(neighbour2);
-      //vec3 displacedN2 = neighbour2 + amp * transformed  * SimplexPerlin3D_Deriv(neighbour2*0.05).x;
-
-      vec3 dipslacedTangent = normalize(displacedN1 - dipslacedposition);
-      vec3 dipslacedBitangent = normalize(displacedN2 - dipslacedposition);
-      vec3 dipslacedNormal = normalize(cross(dipslacedBitangent, dipslacedTangent));
+    vec3 neighbour1 = transformed + tangent * 0.001;
+    vec3 neighbour2 = transformed + bitangent * 0.001;
  
-      // if(normal_Y == normal || uv.y <= .99 || (uv.y <= wave - 1.0 && uv.y >= wave)){
-      if(normal_Y == normal || uv.y <= .2 ||  (uv.y < wave && uv.y > (wave - 0.2))){
-    //    vNormal = normalMatrix * mix(dipslacedNormal,normal,uv.y);
-    //    transformed =  mix(dipslacedposition,transformed,uv.y);  
-       vNormal = normalMatrix * dipslacedNormal;
-       transformed = mix(dipslacedposition,transformed,smoothstep( uv.y+0.3, uv.y, wave));  
-      }else{
-       vNormal = normalMatrix * normal; 
-      }
+    vec3 displacedN1 = dipslaced(neighbour1,amp,topInf,waveInf) + neighbour1;
+    vec3 displacedN2 = dipslaced(neighbour2,amp,topInf,waveInf) + neighbour2;
+     
+    vec3 dipslacedTangent = normalize(displacedN1 - dipslacedposition);
+    vec3 dipslacedBitangent = normalize(displacedN2 - dipslacedposition);
+    vec3 dipslacedNormal = normalize(cross(dipslacedBitangent, dipslacedTangent));
 
-      //vNormal = normalMatrix * dipslacedNormal;    
-      //transformed = dipslacedposition; `
+    transformed = dipslacedposition;
+    vNormal = normalMatrix * dipslacedNormal;     
+    `
       );
     };
   }

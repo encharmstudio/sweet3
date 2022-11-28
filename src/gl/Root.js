@@ -20,7 +20,7 @@ import { Env } from "./components/Env";
 import { OrganicSphere } from "./components/OrganicSphere";
 import { FatLine } from "./components/FatLine";
 import { Greta } from "./components/Greta";
-import { Kernel } from "./components/Kernel";
+import { MontelRod } from "./components/MontelRod";
 
 export class Root {
   /** @type { HTMLDivElement } */
@@ -106,7 +106,7 @@ export class Root {
     // });
     // new FatLine();
     //new Greta();
-    new Kernel();
+    new MontelRod();
 
     Root.pipeline.compile(Root.context);
     Root.pipeline.compile(textContext);
