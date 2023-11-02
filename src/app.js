@@ -1,20 +1,17 @@
-import { GL } from "./gl";
+import { GL } from "./sweet3";
 
 const settings = {
-  backgroundColor: 0x030303,
 };
 
 const container = document.getElementById("container");
 
 const gl = new GL({
-  settings,
   container,
+  settings,
 });
 
 // showLoader()
 
-gl.load().then(() => {
+await gl.load();
 
-  // hideLoader()
-
-});
+// hideLoader()

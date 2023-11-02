@@ -1,1 +1,1 @@
-Copyright Encharm Studio, 2021
+Three.js app template
