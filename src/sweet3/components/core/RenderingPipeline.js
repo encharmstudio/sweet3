@@ -1,4 +1,4 @@
-import { WebGLRenderer } from "three";
+import { WebGLRenderer, ACESFilmicToneMapping } from "three";
 import { EventBus } from "./EventBus";
 import { Root } from "../../Root";
 import { Viewport } from "./Viewport";
