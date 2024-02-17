@@ -88,5 +88,12 @@ export class AssetsManager {
     });
   };
 
-  get = key => this.resources[key];
+  
+  get = key =>  {
+    if (!(key in this.resources)) {
+      console.warn(`Missing ${key} in ${Object.keys(this.resources).join(", ")}`, this);
+      throw `${key} is not found in resources!`;
+    }
+    return this.resources[key];
+  };
 }
