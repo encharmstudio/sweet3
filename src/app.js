@@ -1,17 +1,17 @@
-import { GL } from "./sweet3";
+import { Sweet3 } from "./sweet3";
 
 const settings = {
 };
 
 const container = document.getElementById("container");
 
-const gl = new GL({
+const sweet3 = new Sweet3({
   container,
   settings,
 });
 
 // showLoader()
 
-await gl.load();
+await sweet3.load();
 
 // hideLoader()

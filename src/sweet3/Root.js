@@ -1,12 +1,12 @@
 import { PerspectiveCamera, Scene } from "three";
-import { defaults } from "./settings";
-import { AssetsManager } from "./components/core/AssetsManager";
-import { Viewport } from "./components/core/Viewport";
-import { RenderingPipeline } from "./components/core/RenderingPipeline";
+import { AssetsManager } from "./components/core/AssetsManager/AssetsManager";
 import { Pointer } from "./components/core/Pointer";
+import { RenderingPipeline } from "./components/core/RenderingPipeline";
 import { Tick } from "./components/core/Tick";
+import { Viewport } from "./components/core/Viewport";
+import { defaults } from "./settings";
 
-import { CameraController } from "./components/core/CameraController";
+import { CameraController } from "./components/core/CameraController/CameraController";
 
 export class Root {
   /** @type { HTMLDivElement } */
