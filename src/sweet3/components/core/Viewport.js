@@ -8,6 +8,8 @@ export class Viewport {
   static aspectRatioProvider = "screen.aspectRatio";
 
   container = document.body;
+  x = 0;
+  y = 0;
   v2 = new Vector2();
   iv2 = new Vector2();
   v4 = new Vector4();
