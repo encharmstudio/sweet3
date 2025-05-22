@@ -1,4 +1,4 @@
-import { Root } from "../../Root"
+import { Root } from "../../Root";
 
 const uniforms = {};
 
@@ -19,4 +19,22 @@ export const provide = (name, value) => {
   } else {
     uniforms[name] = { value };
   }
+}
+
+export const autoBind = (shader) => {
+  const regExp = /uniform\s+\w+\s+(\w+)@(\S+);/g;
+  const uniforms = {};
+  
+  shader.vertexShader = shader.vertexShader.replaceAll(regExp, (match, name, binder) => {
+    uniforms[name] = bind(binder);
+    return match.replace(`@${binder}`, '');
+  });
+  
+  shader.fragmentShader = shader.fragmentShader.replaceAll(regExp, (match, name, binder) => {
+    uniforms[name] = bind(binder);
+    return match.replace(`@${binder}`, '');
+  });
+
+  shader.uniforms = { ...shader.uniforms, ...uniforms };
+  return shader;
 }
