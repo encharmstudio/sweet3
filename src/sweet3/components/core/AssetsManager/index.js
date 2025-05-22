@@ -1,7 +1,5 @@
-import { LoadingManager, FloatType, TextureLoader, HalfFloatType } from "three";
-import { GLTFLoader } from "./loaders/GLTFLoader";
-import { RGBELoader } from "./loaders/RGBELoader";
-import { EnvLoader } from "./loaders/EnvLoader";
+import { HalfFloatType, LoadingManager, TextureLoader } from "three";
+import { GLTFLoader, RGBELoader } from "three-stdlib";
 import { assets } from "../../../settings";
 import { EventBus } from "../EventBus";
 import { JSONLoader } from "./loaders/JSONLoader";
@@ -39,8 +37,6 @@ export class AssetsManager {
     case "gltf":
     case "glb":
       return new GLTFLoader(this.manager);
-    case "env":
-      return new EnvLoader(this.manager);
     case "hdr":
       return new RGBELoader(this.manager).setDataType(HalfFloatType);
     case "json":

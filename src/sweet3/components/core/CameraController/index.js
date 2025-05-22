@@ -1,8 +1,8 @@
+import { OrbitControls } from "three-stdlib";
 import { Root } from "../../../Root";
 import { EventBus } from "../EventBus";
 import { Tick } from "../Tick";
 import { Viewport } from "../Viewport";
-import { OrbitControls } from "./OrbitControls";
 
 export class CameraController {
   constructor() {
