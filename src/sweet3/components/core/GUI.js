@@ -1,6 +1,6 @@
+import { Root } from "@/Root";
+import { bind, provide } from "@/components/core/Uniforms";
 import { Pane } from "tweakpane";
-import { Root } from "../../Root";
-import { bind, provide } from "./Uniforms";
 
 const binder = {};
 let pane;
@@ -27,10 +27,12 @@ export function guiBind(name, min, max, val = (min + max) * 0.5) {
       name += "_";
     }
     binder[name] = val;
-    pane.addInput(binder, name, {
-      min,
-      max,
-    }).on("change", (ev) => provide(name, ev.value));
+    pane
+      .addInput(binder, name, {
+        min,
+        max,
+      })
+      .on("change", (ev) => provide(name, ev.value));
   }
   return bind(name, val);
 }

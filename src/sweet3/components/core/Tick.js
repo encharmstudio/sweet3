@@ -4,7 +4,6 @@ import { provide } from "@/components/core/Uniforms";
 import Stats from "@/util/stats.module";
 
 export class Tick {
-
   static rawEvent = "Tick.raw";
   static event = "Tick";
   static beforeRenderEvent = "Tick.beforeRender";
@@ -25,7 +24,7 @@ export class Tick {
     EventBus.on(Tick.rawEvent, this.onAnimFrame);
   }
 
-  onAnimFrame = time => {
+  onAnimFrame = (time) => {
     if (!("prevTime" in this)) {
       this.prevTime = time;
     }

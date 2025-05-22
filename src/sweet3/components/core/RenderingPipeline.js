@@ -1,7 +1,7 @@
-import { WebGLRenderer, ACESFilmicToneMapping } from "three";
-import { EventBus } from "./EventBus";
-import { Root } from "../../Root";
-import { Viewport } from "./Viewport";
+import { EventBus } from "@/components/core/EventBus";
+import { Viewport } from "@/components/core/Viewport";
+import { Root } from "@/Root";
+import { ACESFilmicToneMapping, WebGLRenderer } from "three";
 
 export class RenderingPipeline {
   constructor() {
@@ -11,7 +11,7 @@ export class RenderingPipeline {
     });
     this.onResize(Root.viewport);
     this.renderer.toneMapping = ACESFilmicToneMapping;
-    
+
     this.onResize(Root.viewport);
     EventBus.on(Viewport.resizeEvent, this.onResize);
   }
@@ -19,9 +19,9 @@ export class RenderingPipeline {
   render = () => {
     const { scene, camera } = Root;
     this.renderer.render(scene, camera);
-  }
+  };
 
-  setContainer = container => {
+  setContainer = (container) => {
     container.appendChild(this.renderer.domElement);
     this.onResize(Root.viewport);
   };

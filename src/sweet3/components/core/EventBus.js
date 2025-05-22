@@ -40,24 +40,28 @@ export class EventDispatcher {
     }
 
     if (this.#listeners[type]) {
-      this.#listeners[type].forEach(callback => callback(...data));
+      this.#listeners[type].forEach((callback) => callback(...data));
     }
-    
+
     this.#dispatching[type]--;
-    if (this.#dispatching[type] == 0 && type in this.#toRemove && this.#toRemove[type].length > 0) {
-      this.#toRemove[type].forEach(callback => this.#off(type, callback));
+    if (
+      this.#dispatching[type] == 0 &&
+      type in this.#toRemove &&
+      this.#toRemove[type].length > 0
+    ) {
+      this.#toRemove[type].forEach((callback) => this.#off(type, callback));
       delete this.#toRemove[type];
     }
   };
 
   checkSelf = () => {
-    Object.keys(this.#listeners).forEach(type => {
-      this.#listeners[type].forEach(callback => {
+    Object.keys(this.#listeners).forEach((type) => {
+      this.#listeners[type].forEach((callback) => {
         if (typeof callback !== "function") {
           throw `${type} listener ${callback} is not a function!`;
         }
       });
-    })
+    });
   };
 }
 

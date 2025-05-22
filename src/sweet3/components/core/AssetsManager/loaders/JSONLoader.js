@@ -11,12 +11,12 @@ export class JSONLoader {
     this.manager.itemStart(url);
 
     fetch(url)
-      .then(res => res.json())
-      .then(json => {
+      .then((res) => res.json())
+      .then((json) => {
         onLoad(json);
         this.manager.itemEnd(url);
       })
-      .catch(error => {
+      .catch((error) => {
         if (onError) onError(error);
         this.manager.itemError(url);
         this.manager.itemEnd(url);

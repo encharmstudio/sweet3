@@ -1,11 +1,11 @@
+import { EventBus } from "@/components/core/EventBus";
+import { provide } from "@/components/core/Uniforms";
 import { Vector2, Vector4 } from "three";
-import { EventBus } from "./EventBus";
-import { provide } from "./Uniforms";
 
 export class Viewport {
 
-  static resizeEvent = "screen.resize";
-  static aspectRatioProvider = "screen.aspectRatio";
+  static resizeEvent = "Viewport.resize";
+  static aspectRatioProvider = "Viewport.aspectRatio";
 
   container = document.body;
   x = 0;
@@ -31,7 +31,7 @@ export class Viewport {
     this.update();
   };
 
-  setContainer = container => {
+  setContainer = (container) => {
     this.container = container;
     this.update();
   };
@@ -60,5 +60,4 @@ export class Viewport {
 
     EventBus.dispatch(Viewport.resizeEvent, this);
   };
-
 }

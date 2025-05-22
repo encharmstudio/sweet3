@@ -1,32 +1,28 @@
+import { EventBus } from "@/components/core/EventBus";
+import { provide } from "@/components/core/Uniforms";
+import { Root } from "@/Root";
 import { Raycaster, Vector2, Vector3 } from "three";
-import { EventBus } from "./EventBus";
-import { provide } from "./Uniforms";
-import { Root } from "../../Root";
 
 export class Pointer {
+  static rawEvent = "Pointer.raw";
+  static rawDownEvent = "Pointer.raw.down";
+  static rawUpEvent = "Pointer.raw.up";
 
-  static rawEvent = "pointer.raw";
-  static rawDownEvent = "pointer.raw.down";
-  static rawUpEvent = "pointer.raw.up";
+  static event = "Pointer";
+  static ndcEvent = "Pointer.ndc";
+  static raycasterEvent = "Pointer.raycaster";
 
-  static event = "pointer";
-  static ndcEvent = "pointer.ndc";
-  static raycasterEvent = "pointer.raycaster";
+  static provider = "Pointer";
+  static v3Provider = "Pointer.v3";
+  static raycasterProvider = "Pointer.raycaster";
+  static raycasterOriginProvider = "Pointer.origin";
+  static raycasterDirectionProvider = "Pointer.direction";
 
-  static provider = "pointer";
-  static v3Provider = "pointer.v3";
-  static raycasterProvider = "pointer.raycaster";
-  static raycasterOriginProvider = "pointer.origin";
-  static raycasterDirectionProvider = "pointer.direction";
-
-  constructor({
-    enableRaycaster = false,
-  } = {}) {
-
+  constructor({ enableRaycaster = false } = {}) {
     this.pointer = new Vector2();
     this.pointerNDC = new Vector2();
     this.pointer3 = new Vector3();
-    this.updatePointer({ x: Root.viewport.x * .5, y: Root.viewport.y * .5 });
+    this.updatePointer({ x: Root.viewport.x * 0.5, y: Root.viewport.y * 0.5 });
 
     provide(Pointer.provider, this.pointer);
     provide(Pointer.v3Provider, this.pointer3);
@@ -42,7 +38,7 @@ export class Pointer {
       EventBus.on(Pointer.rawEvent, this.updateRaycaster);
     }
   }
-  
+
   updatePointer = ({ x, y }) => {
     this.pointer.set(x / Root.viewport.x, 1 - y / Root.viewport.y);
     this.pointerNDC.copy(this.pointer).multiplyScalar(2).subScalar(1);
@@ -57,7 +53,7 @@ export class Pointer {
   updateRaycaster = () => {
     this.raycaster.setFromCamera(this.pointerNDC, this.camera);
     EventBus.dispatch(Pointer.raycasterEvent, this.raycaster);
-  }
+  };
 
   onDown = () => {
     this.pointer3.z = 1;
@@ -66,5 +62,4 @@ export class Pointer {
   onUp = () => {
     this.pointer3.z = 0;
   };
-
 }

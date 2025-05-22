@@ -1,12 +1,11 @@
+import { AssetsManager } from "@/components/core/AssetsManager/AssetsManager";
+import { CameraController } from "@/components/core/CameraController";
+import { Pointer } from "@/components/core/Pointer";
+import { RenderingPipeline } from "@/components/core/RenderingPipeline";
+import { Tick } from "@/components/core/Tick";
+import { Viewport } from "@/components/core/Viewport";
+import { defaults } from "@/settings";
 import { PerspectiveCamera, Scene } from "three";
-import { AssetsManager } from "./components/core/AssetsManager/AssetsManager";
-import { Pointer } from "./components/core/Pointer";
-import { RenderingPipeline } from "./components/core/RenderingPipeline";
-import { Tick } from "./components/core/Tick";
-import { Viewport } from "./components/core/Viewport";
-import { defaults } from "./settings";
-
-import { CameraController } from "./components/core/CameraController/CameraController";
 
 export class Root {
   /** @type { HTMLDivElement } */

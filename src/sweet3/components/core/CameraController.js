@@ -1,8 +1,8 @@
+import { Root } from "@/Root";
+import { EventBus } from "@/components/core/EventBus";
+import { Tick } from "@/components/core/Tick";
+import { Viewport } from "@/components/core/Viewport";
 import { OrbitControls } from "three-stdlib";
-import { Root } from "../../../Root";
-import { EventBus } from "../EventBus";
-import { Tick } from "../Tick";
-import { Viewport } from "../Viewport";
 
 export class CameraController {
   constructor() {
