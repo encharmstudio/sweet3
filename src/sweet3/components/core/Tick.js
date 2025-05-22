@@ -1,18 +1,17 @@
-import { EventBus } from "./EventBus";
-import { provide } from "./Uniforms";
-import { Root } from "../../Root";
-
-import Stats from "../../util/stats.module";
+import { Root } from "@/Root";
+import { EventBus } from "@/components/core/EventBus";
+import { provide } from "@/components/core/Uniforms";
+import Stats from "@/util/stats.module";
 
 export class Tick {
 
-  static rawEvent = "tick.raw";
-  static event = "tick";
-  static beforeRenderEvent = "tick.beforeRender";
-  static afterRenderEvent = "tick.afterRender";
+  static rawEvent = "Tick.raw";
+  static event = "Tick";
+  static beforeRenderEvent = "Tick.beforeRender";
+  static afterRenderEvent = "Tick.afterRender";
 
-  static timeProvider = "tick.time";
-  static secondsProvider = "tick.seconds";
+  static timeProvider = "Tick.time";
+  static secondsProvider = "Tick.seconds";
 
   constructor() {
     if (Root.settings.devMode) {
