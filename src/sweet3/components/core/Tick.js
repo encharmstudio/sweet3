@@ -1,5 +1,5 @@
 import { Root } from "@/Root";
-import { EventBus } from "@/components/core/EventBus";
+import { EventBus } from "@/components/core/EventDispatcher";
 import { provide } from "@/components/core/Uniforms";
 import Stats from "@/util/stats.module";
 

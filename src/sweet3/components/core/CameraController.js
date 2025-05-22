@@ -1,5 +1,5 @@
 import { Root } from "@/Root";
-import { EventBus } from "@/components/core/EventBus";
+import { EventBus } from "@/components/core/EventDispatcher";
 import { Tick } from "@/components/core/Tick";
 import { Viewport } from "@/components/core/Viewport";
 import { OrbitControls } from "three-stdlib";

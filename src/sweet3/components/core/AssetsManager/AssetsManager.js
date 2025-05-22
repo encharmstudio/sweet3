@@ -1,5 +1,5 @@
 import { JSONLoader } from "@/components/core/AssetsManager/loaders/JSONLoader";
-import { EventBus } from "@/components/core/EventBus";
+import { EventBus } from "@/components/core/EventDispatcher";
 import { assets } from "@/settings";
 import { LoadingManager, TextureLoader } from "three";
 import { GLTFLoader, RGBELoader } from "three-stdlib";

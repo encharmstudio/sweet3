@@ -1,5 +1,5 @@
 import { AssetsManager } from "@/components/core/AssetsManager/AssetsManager";
-import { EventBus } from "@/components/core/EventBus";
+import { EventBus } from "@/components/core/EventDispatcher";
 import { Pointer } from "@/components/core/Pointer";
 import { Tick } from "@/components/core/Tick";
 import { Root } from "@/Root";

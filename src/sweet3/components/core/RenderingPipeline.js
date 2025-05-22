@@ -1,4 +1,4 @@
-import { EventBus } from "@/components/core/EventBus";
+import { EventBus } from "@/components/core/EventDispatcher";
 import { Viewport } from "@/components/core/Viewport";
 import { Root } from "@/Root";
 import { ACESFilmicToneMapping, WebGLRenderer } from "three";

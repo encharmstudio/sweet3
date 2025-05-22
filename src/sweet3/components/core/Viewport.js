@@ -1,4 +1,4 @@
-import { EventBus } from "@/components/core/EventBus";
+import { EventBus } from "@/components/core/EventDispatcher";
 import { provide } from "@/components/core/Uniforms";
 import { Vector2, Vector4 } from "three";
 
