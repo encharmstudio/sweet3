@@ -12,7 +12,7 @@ export function guiField(object, name, min, max) {
   if (!pane) {
     pane = new Pane();
   }
-  return pane.addInput(object, name, {
+  return pane.addBinding(object, name, {
     min,
     max,
   });
@@ -28,7 +28,7 @@ export function guiBind(name, min, max, val = (min + max) * 0.5) {
     }
     binder[name] = val;
     pane
-      .addInput(binder, name, {
+      .addBinding(binder, name, {
         min,
         max,
       })
